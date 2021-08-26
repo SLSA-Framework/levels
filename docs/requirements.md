@@ -199,6 +199,14 @@ workstation.
 Examples: GitHub Actions, Google Cloud Build, Travis CI.
 
 <td> <td>✓<td>✓<td>✓
+<tr id="config-as-code">
+<td>Config as code
+<td>
+
+The build service configuration is driven from files stored in source control.
+
+Examples: zuul.yaml, cloudbuild.yaml, .github/workflows
+<td> <td> <td>✓<td>✓
 <tr id="ephemeral-environment">
 <td>Ephemeral environment
 <td>
