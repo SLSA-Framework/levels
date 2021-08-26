@@ -205,7 +205,15 @@ Examples: GitHub Actions, Google Cloud Build, Travis CI.
 
 The build service configuration is defined in files stored in source control.
 
-Examples: zuul.yaml, cloudbuild.yaml, .github/workflows
+When using config-as-code the <a href="identifies-entry-point">entry point</a>
+MUST identify the build service configuration.
+
+Examples:
+
+- cloudbuild.yaml:gcr.io/cloud-builders/docker
+- .github/workflows/build.yaml:build-npm
+- .zuul.yaml:envoy-build-arm64
+
 <td> <td> <td>✓<td>✓
 <tr id="ephemeral-environment">
 <td>Ephemeral environment
