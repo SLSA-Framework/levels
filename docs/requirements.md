@@ -433,7 +433,7 @@ Build steps example:
 ```
 TODO
 ```
-
+<td>✓<td>✓<td>✓<td>✓
 <tr id="identifies-entry-point">
 <td>Identifies entry point
 <td>
