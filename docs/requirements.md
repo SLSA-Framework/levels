@@ -443,8 +443,8 @@ used to drive the build including what source repo the the configuration was
 read from.
 
 Example:
-source repo: git URL + branch/tag/ref + commit ID
-entrypoint: path to config file(s) (e.g. ./.zuul.yaml) + job name within config
+- source repo: git URL + branch/tag/ref + commit ID
+- entrypoint: path to config file(s) (e.g. ./.zuul.yaml) + job name within config
     (e.g. envoy-build-arm64)
 
 <td><td><td>✓<td>✓
