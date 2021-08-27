@@ -187,7 +187,7 @@ The framework is constantly being improved, and is now ready to be tried out and
 
 ## Get involved
 
-We rely on feedback from other organisations to improve, and we’d love to hear from you. Are the levels achievable in your project? Would you add or remove anything from the framework?
+We rely on feedback from other organizations to improve, and we’d love to hear from you. Are the levels achievable in your project? Would you add or remove anything from the framework?
 
 <div class="pseudo-button m-t-l">
 

@@ -220,3 +220,46 @@ h4 {
         display: block;
     }
 }
+
+.link-tree {
+    table {
+        max-width: 500px;
+        border: none;
+
+        tr {
+            background-color: transparent;
+        }
+        td {
+            background-color: transparent;
+            border: 1px solid #c9c9c9;
+            padding: 4px 8px;
+        }
+        th {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            color: $grey-color;
+            font-weight: normal;
+        }
+        a {
+            display: block;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    // Style variations for use-cases page
+    &.use-cases {
+        table {
+            border-collapse: separate;
+            border-spacing: 0 $spacer-l;
+            max-width: 80%;
+
+            td {
+                padding: $spacer-m;
+            }
+        }
+    }
+}

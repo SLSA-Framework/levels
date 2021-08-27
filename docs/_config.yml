@@ -6,7 +6,7 @@ header_pages:
   - index.md
   - levels.md
   - requirements.md
-  - example.md
+  - use-cases/index.md
   - roadmap.md
   - getinvolved.md
 exclude:

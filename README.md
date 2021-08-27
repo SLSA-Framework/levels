@@ -43,7 +43,7 @@ SLSA is currently led by an initial cross-organization, vendor-neutral steering 
 
 ## Get involved
 
-We rely on feedback from other organisations to evolve SLSA and be more useful to more people. We’d love to hear your experiences using it.
+We rely on feedback from other organizations to evolve SLSA and be more useful to more people. We’d love to hear your experiences using it.
 
 **Are the levels achievable in your project? Would you add or remove anything from the framework? What else is needed before you can adopt it?**
 
