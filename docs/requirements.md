@@ -417,7 +417,7 @@ provenance. This represents the entity that the consumer must trust. Examples:
 
 Identifies the top-level instructions used to execute the build.
 
-The identified instructions SHOULD be at the highest level available to the build. 
+The identified instructions SHOULD be at the highest level available to the build.
 If the build uses <a href="#config-as-code">config-as-code<a>, this SHOULD be the
 source repo and entry point of the build config and NOT the build steps within the
 build config.  If the build does not use config-as-code it MAY list details of the
@@ -471,6 +471,7 @@ Build steps example:
     ]
 }
 ```
+
 <td>✓<td>✓<td>✓<td>✓
 <tr id="identifies-entry-point">
 <td>Identifies entry point
@@ -481,8 +482,9 @@ The provenance identifies the "entry point" of the build service configuration
 including what source repo the configuration was read from.
 
 Example:
-- source repo: git URL + branch/tag/ref + commit ID
-- entrypoint: path to config file(s) (e.g. ./.zuul.yaml) + job name within config
+
+-   source repo: git URL + branch/tag/ref + commit ID
+-   entrypoint: path to config file(s) (e.g. ./.zuul.yaml) + job name within config
     (e.g. envoy-build-arm64)
 
 <td><td><td>✓<td>✓
