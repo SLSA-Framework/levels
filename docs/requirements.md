@@ -424,13 +424,13 @@ build does not use config-as-code it MAY list details of the build steps.
 
 Config-as-code example:
 
-```json
+```json5
 "recipe": {
   "type": "https://github.com/Attestations/GitHubActionsWorkflow@v1",
   // Identifies the source repo of the build config.
   "definedInMaterial": 0,
-  # Identifies the entrypoint within the source repo at the path
-  # .github/workflows/build.yaml, using the job "build".
+  // Identifies the entrypoint within the source repo at the path
+  // .github/workflows/build.yaml, using the job "build".
   "entryPoint": ".github/workflows/build.yaml:build",
 },
 …
@@ -442,10 +442,10 @@ Config-as-code example:
 
 Build steps example:
 
-```json
+```json5
 "recipe": {
-  # Build steps were provided as an argument. No `definedInMaterial` or
-  # `entryPoint`.
+  // Build steps were provided as an argument. No `definedInMaterial` or
+  // `entryPoint`.
   "type": "https://tekton.dev/chains/recipe/buildSteps@v1",
   "arguments": {
       "steps": [
