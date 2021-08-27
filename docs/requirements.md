@@ -424,14 +424,51 @@ build does not use config-as-code it MAY list details of the build steps.
 
 Config-as-code example:
 
-```
-TODO
+```json
+"recipe": {
+  "type": "https://github.com/Attestations/GitHubActionsWorkflow@v1",
+  // Identifies the source repo of the build config.
+  "definedInMaterial": 0,
+  // Identifies the entrypoint within the source repo at the path
+  // .github/workflows/build.yaml, using the job "build".
+  "entryPoint": ".github/workflows/build.yaml:build",
+},
+…
+"materials": [{
+   "uri": "git+https://the.repo/foo",
+   "digest": {"sha1": "abc123..."}
+}]
 ```
 
 Build steps example:
 
-```
-TODO
+```json
+"recipe": {
+  // Build steps were provided as an argument. No `definedInMaterial` or
+  // `entryPoint`.
+  "type": "https://tekton.dev/chains/recipe/buildSteps@v1",
+  "arguments": {
+      steps: [
+          {
+            "entryPoint": "",
+            "arguments": null,
+            "environment": {
+              "container": "git-source-repo-jwqcl",
+              "image": "gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init@sha256:b963f6e7a69617db57b685893256f978436277094c21d43b153994acd8a01247"
+            },
+            "annotations": null
+          },
+          {
+            "entryPoint": "#!/usr/bin/env bash\nset -x\n\ncd $(inputs.resources.repo.path)\n\nbazel build --host_force_python=PY2 //package_manager:dpkg_parser.par\ncp bazel-bin/package_manager/dpkg_parser.par .\n\nbazel build //base:static_root_amd64_debian10.tar\n\ncp bazel-bin/base/static_root_amd64_debian10.tar .\n\nfind /workspace/repo\npwd\n\necho \"gcr.io/foo/bar\" > $(results.IMAGE_URL.path)\n",
+            "arguments": null,
+            "environment": {
+              "container": "build",
+              "image": "gcr.io/cloud-marketplace-containers/google/bazel@sha256:010a1ecd1a8c3610f12039a25b823e3a17bd3e8ae455a53e340dcfdd37a49964"
+            },
+            "annotations": null
+          }
+    ]
+}
 ```
 <td>✓<td>✓<td>✓<td>✓
 <tr id="identifies-entry-point">
@@ -439,8 +476,8 @@ TODO
 <td>
 
 The provenance identifies the "entry point" of the build service configuration
-used to drive the build including what source repo the the configuration was
-read from.
+used to drive the build including what source repo the configuration was read
+from.
 
 Example:
 - source repo: git URL + branch/tag/ref + commit ID
