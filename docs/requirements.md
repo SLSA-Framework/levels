@@ -418,9 +418,10 @@ provenance. This represents the entity that the consumer must trust. Examples:
 Identifies the top-level instructions used to execute the build.
 
 The identified instructions SHOULD be at the highest level available to the build. 
-If the build uses config-as-code, this SHOULD be the source repo and entry point
-of the build config and NOT the build steps within the build config.  If the
-build does not use config-as-code it MAY list details of the build steps.
+If the build uses <a href="#config-as-code">config-as-code<a>, this SHOULD be the
+source repo and entry point of the build config and NOT the build steps within the
+build config.  If the build does not use config-as-code it MAY list details of the
+build steps.
 
 Config-as-code example:
 
@@ -476,8 +477,8 @@ Build steps example:
 <td>
 
 The provenance identifies the "entry point" of the build service configuration
-used to drive the build including what source repo the configuration was read
-from.
+(see <a href="#config-as-code">config-as-code</a>) used to drive the build
+including what source repo the configuration was read from.
 
 Example:
 - source repo: git URL + branch/tag/ref + commit ID
