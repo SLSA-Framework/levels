@@ -199,6 +199,14 @@ workstation.
 Examples: GitHub Actions, Google Cloud Build, Travis CI.
 
 <td> <td>✓<td>✓<td>✓
+<tr id="config-as-code">
+<td>Config as code
+<td>
+
+The build service configuration is defined in source control and drives the build automatically.
+
+Examples: cloudbuild.yaml, ./github/workflows/build.yaml, zuul.yaml.
+<td> <td> <td>✓<td>✓
 <tr id="ephemeral-environment">
 <td>Ephemeral environment
 <td>
@@ -403,22 +411,83 @@ provenance. This represents the entity that the consumer must trust. Examples:
 "GitHub Actions with a GitHub-hosted worker", "jdoe@example.com's machine".
 
 <td>✓<td>✓<td>✓<td>✓
-<tr id="identifies-source">
-<td>Identifies source
+<tr id="identifies-build-instructions">
+<td>Identifies build instructions
 <td>
 
-The provenance identifies the source containing the top-level build script, via
-an [immutable reference]. Example: git URL + branch/tag/ref + commit ID.
+Identifies the top-level instructions used to execute the build.
+
+The identified instructions SHOULD be at the highest level available to the build.
+If the build uses <a href="#config-as-code">config-as-code<a>, this SHOULD be the
+source repo and entry point of the build config and NOT the build steps within the
+build config.  If the build does not use config-as-code it MAY list details of the
+build steps.
+
+Config-as-code example:
+
+```json5
+"recipe": {
+  "type": "https://github.com/Attestations/GitHubActionsWorkflow@v1",
+  // Identifies the source repo of the build config.
+  "definedInMaterial": 0,
+  // Identifies the entrypoint within the source repo at the path
+  // .github/workflows/build.yaml, using the job "build".
+  "entryPoint": ".github/workflows/build.yaml:build",
+},
+…
+"materials": [{
+   "uri": "git+https://the.repo/foo",
+   "digest": {"sha1": "abc123..."}
+}]
+```
+
+Build steps example:
+
+```json5
+"recipe": {
+  // Build steps were provided as an argument. No `definedInMaterial` or
+  // `entryPoint`.
+  "type": "https://tekton.dev/chains/recipe/buildSteps@v1",
+  "arguments": {
+      "steps": [
+          {
+            "entryPoint": "",
+            "arguments": null,
+            "environment": {
+              "container": "git-source-repo-jwqcl",
+              "image": "gcr.io/tekton-releases/..."
+            },
+            "annotations": null
+          },
+          {
+            "entryPoint": "#!/usr/bin/env bash\nset -x\n\ncd ...",
+            "arguments": null,
+            "environment": {
+              "container": "build",
+              "image": "gcr.io/cloud-marketplace-containers/..."
+            },
+            "annotations": null
+          }
+    ]
+}
+```
 
 <td>✓<td>✓<td>✓<td>✓
 <tr id="identifies-entry-point">
 <td>Identifies entry point
 <td>
 
-The provenance identifies the "entry point" or command that was used to invoke
-the build script. Example: `make all`.
+The provenance identifies the "entry point" of the build service configuration
+(see <a href="#config-as-code">config-as-code</a>) used to drive the build
+including what source repo the configuration was read from.
 
-<td>✓<td>✓<td>✓<td>✓
+Example:
+
+-   source repo: git URL + branch/tag/ref + commit ID
+-   entrypoint: path to config file(s) (e.g. ./.zuul.yaml) + job name within config
+    (e.g. envoy-build-arm64)
+
+<td><td><td>✓<td>✓
 <tr id="includes-all-params">
 <td>Includes all build parameters
 <td>
