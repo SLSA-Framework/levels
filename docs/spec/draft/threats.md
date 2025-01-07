@@ -53,13 +53,12 @@ broadly adopted in an automated fashion, minimizing the chance of mistakes.
 
 A source integrity threat is a potential for an adversary to introduce a change
 to the source code that does not reflect the intent of the software producer.
-This includes the threat of an authorized individual introducing an unauthorized
-change---in other words, an insider threat.
+This includes modification of the source data at rest as well as insider threats,
+when an authorized individual introduces an unauthorized change.
 
-SLSA v1.0 does not address source threats, but we anticipate doing so in a
-[future version](future-directions.md#source-track). In the meantime, the
-threats and potential mitigations listed here show how SLSA v1.0 can fit into a
-broader supply chain security program.
+The SLSA Source track mitigates these threats when the consumer
+[verifies source revisions](verifying-source.md) against expectations, confirming
+that the revision they received was produced in the expected manner.
 
 ### (A) Producer
 
@@ -67,70 +66,51 @@ The producer of the software intentionally produces code that harms the
 consumer, or the producer otherwise uses practices that are not deserving of the
 consumer's trust.
 
-Threats in this category likely *cannot* be mitigated through controls placed
-during the authoring/reviewing process, in contrast with (B).
+<details><summary>Software producer intentionally creates a malicious revision of the source</summary>
 
-<!--
-**TODO:** The difference between (A) and (B) is still a bit fuzzy, which would
-be nice to resolve. For example, compromised developer credentials - is that (A)
-or (B)?
--->
+*Threat:* A producer intentionally creates a malicious revision with the intent of harming their consumers.
 
-<details><summary>Software producer intentionally submits bad code</summary>
+*Mitigation:*
+This kind of attack cannot be directly mitigated through SLSA controls.
+Trustworthiness scales with transparency, and consumers SHOULD push their vendors to follow transparency best-practices.
+When transparency is not possible, consumers may choose not to consume the artifact, or may require additional evidence of correctness from a trusted third-party.
+Tools like the [OSSF Scorecard](https://github.com/ossf/scorecard) can help to quantify the risk of consuming artifacts from specific producers, but do not fully remove it.
+For example, a consumer may choose to only consume source artifacts from repositories that have a high score on the OSSF Scorecard.
 
-*Threat:* Software producer intentionally submits "bad" code, following all
-proper processes.
-
-*Mitigation:* **TODO**
-
-*Example:* A popular extension author sells the rights to a new owner, who then
-modifies the code to secretly mine cryptocurrency at the users' expense. SLSA
-does not protect against this, though if the extension were open source, regular
-auditing may discourage this from happening.
+*Example:* A producer with an otherwise good reputation decides suddenly to produce a malicious artifact with the intent to harm their consumers.
 
 </details>
 
-<!--
-**TODO:** More producer threats? Perhaps the attack to xz where a malicious
-contributor gained enhanced privileges through social engineering?
--->
+### (B) Modifying the source
 
-### (B) Authoring & reviewing
+An adversary without any special administrator privileges attempts to introduce a change counter to the declared intent of the source by following the producer's official source control process.
 
-An adversary introduces a change through the official source control management
-interface without any special administrator privileges.
-
-Threats in this category *can* be mitigated by code review or some other
-controls during the authoring/reviewing process, at least in theory. Contrast
-this with (A), where such controls are likely ineffective.
+Threats in this category can be mitigated by following source control management best practices.
 
 #### (B1) Submit change without review
 
 <details><summary>Directly submit without review</summary>
 
-*Threat:* Submit bad code to the source repository without another person
-reviewing.
+*Threat:* Submit code to the source repository without another person reviewing.
 
-*Mitigation:* Source repository requires two-person approval for all changes.
+*Mitigation:* The producer requires approval of all changes before they are accepted.
 
-*Example:* Adversary directly pushes a change to a GitHub repo's `main` branch.
-Solution: Configure GitHub's "branch protection" feature to require pull request
-reviews on the `main` branch.
+*Example:* Adversary directly pushes a change to a git repo's `main` branch.
+Solution: The producer can configure branch protection rules on the `main` branch.
+A best practice is to require approval of any changes via a change management tool before they are accepted into the source.
 
 </details>
-<details><summary>Review own change through a sock puppet account</summary>
+<details><summary>Single actor controls multiple accounts</summary>
 
-*Threat:* Propose a change using one account and then approve it using another
-account.
+*Threat:* An actor is able to control multiple account and effectively approve their own code changes.
 
-*Mitigation:* Source repository requires approval from two different, trusted
-persons. If the proposer is trusted, only one approval is needed; otherwise two
-approvals are needed. The software producer maps accounts to trusted persons.
+*Mitigation:* The producer must ensure that no actor is able to control or influence multiple accounts with review privileges.
 
-*Example:* Adversary creates a pull request using a secondary account and then
-approves and merges the pull request using their primary account. Solution:
-Configure branch protection to require two approvals and ensure that all
-repository contributors and owners map to unique persons.
+*Example:* Adversary creates a pull request using a secondary account and approves it using their primary account.
+
+Solution: The producer must require strongly authenticated user accounts and ensure that all accounts map to unique persons.
+A common vector for this attack is to take over a robot account with the permission to contribute code.
+Control of the robot and an actors own legitimate account is enough to exploit this vulnerability.
 
 </details>
 <details><summary>Use a robot account to submit change</summary>
@@ -142,63 +122,63 @@ two-person review.
 robots.
 
 *Example:* A file within the source repository is automatically generated by a
-robot, which is allowed to submit without review. Adversary compromises the
-robot and submits a malicious change without review. Solution: Require human
-review for these changes.
-
-<!--
-> TODO([#196](https://github.com/slsa-framework/slsa/issues/196)) This solution
-> may not be practical. Should there be an exception for locked down robot
-> accounts?
--->
+robot, which is allowed to submit without review.
+Adversary compromises the robot and submits a malicious change.
+Solution: Require review for such changes.
 
 </details>
-<details><summary>Abuse review exceptions</summary>
+<details><summary>Abuse of rule exceptions</summary>
 
-*Threat:* Exploit a review exception to submit a bad change without review.
+*Threat:* Rule exceptions provide vector for abuse
 
-*Mitigation:* All changes require two-person review without exception.
+*Mitigation:* Remove rule exceptions.
 
-*Example:* Source repository requires two-person review on all changes except
-for "documentation changes," defined as only touching files ending with `.md` or
-`.html`. Adversary submits a malicious executable named `evil.md` without review
-using this exception, and then builds a malicious package containing this
-executable. This would pass the policy because the source repository is correct,
-and the source repository does require two-person review. Solution: Do not allow
-such exceptions.
-
-<!--
-> TODO This solution may not be practical in all circumstances. Are there any
-> valid exceptions? If so, how do we ensure they cannot be exploited?
--->
+*Example:* The intent of a producer is to require two-person review on "all changes except for documentation changes," defined as those only modifying `.md` files.
+Adversary submits a malicious executable named `evil.md` and a code review is not required due to the exception.
+Technically, the intent of the producer was followed and the produced malicious revision meets all defined policies.
+Solution: The producer adjusts the rules to prohibit such exceptions.
 
 </details>
 
-#### (B2) Evade code review requirements
+<details><summary>Highly-permissioned actor bypasses or disables controls</summary>
+
+*Threat:* Trusted actor with "admin" privileges in a repository submits code by disabling existing controls.
+
+*Mitigation:* All actors must be subject to same controls, whether or not they have
+administrator privileges.
+Changes to the controls themselves should require their own review process.
+
+*Example 1:* A GitHub repository-level admin pushes a change without review, even though GitHub branch protection is enabled.
+Solution: The producer can modify the rule to disallow bypass by administrators, or move the rule to an organization-level ruleset.
+
+*Example 2:* GitHub repository-level admin removes a branch requirement, pushes their change, then re-enables the requirement to cover their tracks.
+Solution: The producer can configure higher-permission-level rules (such as organization-level GitHub Rulesets) to prevent repository-level tampering.
+
+#### (B2) Evade change management process
 
 <details><summary>Modify code after review</summary>
 
 *Threat:* Modify the code after it has been reviewed but before submission.
 
-*Mitigation:* Source control platform invalidates approvals whenever the
-proposed change is modified.
+*Mitigation:* Source control platform invalidates approvals whenever the proposed change is modified.
 
 *Example:* Source repository requires two-person review on all changes.
-Adversary sends a "good" pull request to a peer, who approves it. Adversary then
-modifies it to contain "bad" code before submitting. Solution: Configure branch
-protection to dismiss stale approvals when new changes are pushed.
+Adversary sends an initial "good" pull request to a peer, who approves it.
+Adversary then modifies their proposal to contain "bad" code.
 
-> Note: This is not currently a SLSA requirement because the productivity hit is
-> considered too great to outweigh the security benefit. The cost of code review
-> is already too high for most projects, given current code review tooling, so
-> making code review even costlier would not further our goals. However, this
-> should be considered for future SLSA revisions once the state-of-the-art for
-> code review has improved and the cost can be minimized.
+Solution: Configure the code review rules to require review of the most recent revision before submission.
+Resetting or "dismissing" votes on a PR introduces substantial friction to the process.
+Depending on the security posture of the source, the producer has a few choices to deal with this situation.
+They may:
+
+-   Accept this risk. Code review is already expensive and the pros outweigh the cons here.
+-   Dismiss reviews when new changes are added. This is a common outcome when expert code review is required.
+-   Leave previous reviews intact, but require that "at least the last revision must be reviewed by someone."
 
 </details>
 <details><summary>Submit a change that is unreviewable</summary>
 
-*Threat:* Send a change that is meaningless for a human to review that looks
+*Threat:* Adversary crafts a change that is meaningless for a human to review that looks
 benign but is actually malicious.
 
 *Mitigation:* Code review system ensures that all reviews are informed and
@@ -206,8 +186,8 @@ meaningful.
 
 *Example:* A proposed change updates a file, but the reviewer is only presented
 with a diff of the cryptographic hash, not of the file contents. Thus, the
-reviewer does not have enough context to provide a meaningful review. Solution:
-the code review system should present the reviewer with a content diff or some
+reviewer does not have enough context to provide a meaningful review.
+Solution: the code review system should present the reviewer with a content diff or some
 other information to make an informed decision.
 
 </details>
@@ -221,43 +201,25 @@ different context.
 *Example:* MyPackage's source repository requires two-person review. Adversary
 forks the repo, submits a change in the fork with review from a colluding
 colleague (who is not trusted by MyPackage), then merges the change back into
-the upstream repo. Solution: The merge should still require review, even though
-the fork was reviewed.
+the upstream repo.
+Solution: The merge should still require review, even though the fork was reviewed.
 
 </details>
-<details><summary>Compromise another account</summary>
-
-*Threat:* Compromise one or more trusted accounts and use those to submit and
-review own changes.
-
-*Mitigation:* Source control platform verifies two-factor authentication, which
-increases the difficulty of compromising accounts.
-
-*Example:* Trusted person uses a weak password on GitHub. Adversary guesses the
-weak password, logs in, and pushes changes to a GitHub repo. Solution: Configure
-GitHub organization to requires 2FA for all trusted persons. This would increase
-the difficulty of using the compromised password to log in to GitHub.
 
 </details>
-<details><summary>Hide bad change behind good one</summary>
+<details><summary>Commit graph attacks</summary>
 
-*Threat:* Request review for a series of two commits, X and Y, where X is bad
-and Y is good. Reviewer thinks they are approving only the final Y state whereas
-they are also implicitly approving X.
+*Threat:* Request review for a series of two commits, X and Y, where X is bad and Y is good.
+Reviewer thinks they are approving only the final Y state but they are also implicitly approving X.
 
-*Mitigation:* Only the version that is actually reviewed is the one that is
-approved. Any intermediate revisions don't count as being reviewed.
+*Mitigation:* The producer declares that only the final delta is considered approved.
+Intermediate revisions don't count as being reviewed and are not added to the protected context (such as the `main` branch).
 
-*Example:* Adversary sends a pull request containing malicious commit X and
-benign commit Y that undoes X. In the pull request UI, reviewer only reviews and
-approves "changes from all commits", which is a delta from HEAD to Y; they don't
-see X. Adversary then builds from the malicious revision X. Solution: Policy
-does not accept this because the version X is not considered reviewed.
+*Example:* Adversary sends a pull request containing malicious commit X and benign commit Y that undoes X.
+The produced diff of X + Y contains zero lines of changed code and the reviewer may not notice that X is malicious unless they review each commit in the request.
+If X is allowed to become reachable from the protected branch, the content may become available in secured environments such as developer machines.
 
-<!--
-> TODO This is implicit but not clearly spelled out in the requirements. We
-> should consider clarifying if there is confusion or incorrect implementations.
--->
+Solution: The code review tool does not merge contributor-created commits, and instead merges a single new commit representing only the reviewed "changes from all commits."
 
 </details>
 
@@ -267,8 +229,10 @@ does not accept this because the version X is not considered reviewed.
 
 *Threat:* Two trusted persons collude to author and approve a bad change.
 
-*Mitigation:* This threat is not currently addressed by SLSA. We use "two
-trusted persons" as a proxy for "intent of the software producer".
+*Mitigation:* The producer can arbitrarily increase friction of their policies to reduce risk, such as requiring additional, or more senior reviewers.
+The goal of policy here is to ensure that the approved changes match the intention of the producer for the source.
+Increasing the friction of the policies may make it harder to circumvent, but doing so has diminishing returns.
+Ultimately the producer will need to land upon a balanced risk profile that makes sense for their security posture.
 
 </details>
 <details><summary>Trick reviewer into approving bad code</summary>
@@ -293,29 +257,6 @@ stamping."
 An adversary introduces a change to the source control repository through an
 administrative interface, or through a compromise of the underlying
 infrastructure.
-
-<details><summary>Project owner bypasses or disables controls</summary>
-
-*Threat:* Trusted person with "admin" privileges in a repository submits "bad"
-code bypassing existing controls.
-
-*Mitigation:* All persons are subject to same controls, whether or not they have
-administrator privileges. Disabling the controls requires two-person review (and
-maybe notifies other trusted persons?)
-
-*Example 1:* GitHub project owner pushes a change without review, even though
-GitHub branch protection is enabled. Solution: Enable the "Include
-Administrators" option for the branch protection.
-
-*Example 2:* GitHub project owner disables "Include Administrators", pushes a
-change without review, then re-enables "Include Administrators". This currently
-has no solution on GitHub.
-
-<!--
-> TODO This is implicit but not clearly spelled out in the requirements. We
-> should consider clarifying since most if not all existing platforms do not
-> properly address this threat.
--->
 
 </details>
 <details><summary>Platform admin abuses privileges</summary>
