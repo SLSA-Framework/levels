@@ -212,8 +212,13 @@ Exceptions are allowed via the [safe expunging process](#safe-expunging-process)
 <td><td>✓<td>✓
 <tr id="identity-management"><td>Identity Management<td>
 
-There exists an identity management system or some other means of identifying actors.
-This system may be a federated authentication system (AAD, Google, Okta, GitHub, etc) or custom implementation (gittuf, gpg-signatures on commits, etc).
+There exists an identity management system or some other means of identifying
+and authenticating actors. Depending on the SCS, identity management may be
+provided by source control services (e.g., GitHub, GitLab), implemented using
+cryptographic signatures (e.g., using gittuf to manage public keys for actors),
+or extend existing authentication systems used by the organization (e.g., Active
+Directory, Okta, etc.).
+
 The SCS MUST document how actors are identified for the purposes of attribution.
 
 Activities conducted on the SCS SHOULD be attributed to authenticated identities.
