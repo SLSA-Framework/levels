@@ -21,6 +21,7 @@ permissions in this repository.
 | Marcela Melara | marcela.melara@intel.com | @Marcela Melara | [marcelamelara](https://github.com/marcelamelara) | Intel
 | Mark Lodato | lodato@google.com |  @Mark Lodato | [MarkLodato](https://github.com/MarkLodato) | Google
 | Michael Lieberman | mlieberman85@gmail.com | @Michael Lieberman | [mlieberman85](https://github.com/mlieberman85) | Kusari
+| Pavel Iakovenko | paveliak@github.com | @Pavel Iakovenko | [paveliak](https://github.com/paveliak) | GitHub
 | Tom Hennen | tomhennen@google.com | @Tom Hennen | [TomHennen](https://github.com/TomHennen) | Google
 | Trishank Karthik Kuppusamy | trishank.kuppusamy@datadoghq.com | @trishank | [trishankatdatadog](https://github.com/trishankatdatadog) | Datadog
 | Zachariah Cox | zachariahcox@github.com | @zachariahcox | [zachariahcox](https://github.com/zachariahcox) | GitHub
