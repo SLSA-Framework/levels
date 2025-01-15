@@ -5,7 +5,7 @@ description: This page gives an overview of the SLSA Build Environment track and
 
 ## Rationale
 
-Today's hosted build platforms play a central role in an artifact's supply
+Today's hosted [build platforms] play a central role in an artifact's supply
 chain. Whether it's a cloud-hosted service like GitHub Actions or an internal
 enterprise CI/CD system, the build platform has a privileged level of access
 to artifacts and sensitive operations during a build (e.g., access to
@@ -18,15 +18,15 @@ implement and operate fully secure build platforms because they are made up
 of many layers of interconnected components and subsystems.
 
 The SLSA Build Environment track aims to address these issues by making it
-possible to validate the integrity and trace the provenance of core build
+possible to validate the integrity and trace the [provenance] of core build
 platform components.
 
 ## Track overview
 
 The SLSA Build Environment (BuildEnv) track describes increasing levels of
-integrity and trustworthiness of the <dfn>provenance</dfn> of a build's
-execution context. In this track, provenance describes how a [build image]
-was created, how the [hosted] build platform deployed a build image in its
+integrity and trustworthiness of the provenance of a build's
+execution context. In this track, provenance describes how a build image
+was created, how the hosted build platform deployed a build image in its
 environment, and the compute platform they used.
 
 | Track/Level   | Requirements | Focus | Trust Root
@@ -52,23 +52,23 @@ TODO
 ## BuildEnv levels
 
 The primary purpose of the Build Environment (BuildEnv) track is to enable
-auditing that a build was run in the expected execution context.
+auditing that a build was run in the expected [execution context].
 
 The lowest level only requires SLSA [Build L2] Provenance to
-exist for the build image, while higher levels provide increasing
+exist for the [build image], while higher levels provide increasing
 auditability of the build environment's properties and integrity of the
 generated provenance attestations. The highest levels introduce further
-requirements for hardware-assisted hardening aimed at reducing the trusted
-computing base of a build.
+requirements for hardware-assisted hardening of the [compute platform]
+aimed at reducing the trusted computing base of a build.
 
 Software producers and third-party auditors can check attestations generated
-by the build image producer and build platform against the expected
+by the [build image producer] and build platform against the expected
 properties for a given build environment. This enables any party to detect
 [several classes] of supply chain threats originating in the build
 environment.
 
 As in the Build track, the exact implementation of this track is determined
-by the build platform provider, whether they are a commercial CI/CD service
+by the build platform implementer, whether they are a commercial CI/CD service
 or enterprise organization. While this track describes general minimum
 requirements, this track does not dictate the following
 implementation-specific details: the type of build environment, accepted
@@ -110,23 +110,23 @@ n/a
 <dt>Summary<dd>
 
 The build image (i.e., VM or container image) used to instantiate the build
-environment has SLSA provenance showing how the image was built.
+environment has SLSA Build Provenance showing how the image was built.
 
 <dt>Intended for<dd>
 
 Build platforms and organizations wanting to ensure a baseline level of
-integrity for build environments at the time of build image distrbution.
+integrity for build environments at the time of build image distribution.
 
 <dt>Requirements<dd>
 
 -   Build Image Producer:
     -   MUST automatically generate SLSA [Build L2] or higher
     Provenance for created build images (i.e., VM or container images).
-    -   MUST allow independent automatic verification of a build image's SLSA
-    Provenance. If the build image artifact cannot be published, for example
-    due to intellectual property concerns, an attestation asserting the
+    -   MUST allow independent automatic verification of a build image's [SLSA
+    Build Provenance]. If the build image artifact cannot be published, for
+    example due to intellectual property concerns, an attestation asserting the
     expected hash value of the build image MUST be generated and distributed
-    instead (e.g., using [SCAI] or a [Release Attestation]). If the full
+    instead (e.g., using [SCAI] or a [Release Attestation]). If the full Build
     Provenance document cannot be disclosed, a [VSA] asserting the build
     image's SLSA Provenance MUST be distributed instead.
 
@@ -168,14 +168,14 @@ All of [BuildEnv L1], plus:
 -   Build Image Producer:
     -   Build images MUST be created via a SLSA [Build L3] or higher build
     process.
-    -   MUST automatically generate and distribute signed reference values
+    -   MUST automatically generate and distribute signed [reference values]
     for the following build image components: bootloader or equivalent,
-    guest kernel, build agent, build executor, and root filesystem (e.g.,
-    via the image's SLSA Provenance, or [SCAI]).
+    guest kernel, [build agent], and root filesystem (e.g., via the image's
+    SLSA Provenance, or [SCAI]).
     Additional build image components whose initial state is to be checked
     MAY be also measured.
     -   The build agent MUST be capable of:
-        -   Upon completion of the boot process: Automatically interfacing
+        -   Upon completion of the [boot process]: Automatically interfacing
         with the host interface to obtain and transmit a signed quote for the
         build environment's system state.
         -   Upon build dispatch: Automatically generating and distributing
@@ -185,13 +185,13 @@ All of [BuildEnv L1], plus:
 -   Build Platform Requirements:
     -   MUST meet SLSA [Build L3] requirements.
     -   Prior to dispatching a tenant's build to an instantiated environment,
-    a signed quote MUST be automatically requested from the build agent,
-    and the contained measurements verified against their boot process
+    a signed [quote] MUST be automatically requested from the build agent,
+    and the contained [measurements] verified against their boot process
     reference values. A signed attestation to the result of the verification
     MUST be generated and distributed (e.g., via a [VSA]).
 
 -   Compute Platform Requirements:
-    -   The host interface MUST be capable of generating signed quotes for
+    -   The [host interface] MUST be capable of generating signed quotes for
     the build environment's system state.
     In a VM-based environment, this MUST be achieved by enabling a feature
     like [vTPM], or equivalent, in the hypervisor.
@@ -295,10 +295,22 @@ TODO
 [Release Attestation]: https://github.com/in-toto/attestation/blob/main/spec/predicates/release.md
 [SCAI]: https://github.com/in-toto/attestation/blob/main/spec/predicates/scai.md
 [Secure Boot]: https://wiki.debian.org/SecureBoot#What_is_UEFI_Secure_Boot.3F
+[SLSA Build Provenance]: provenance.md
 [TPM]: https://trustedcomputinggroup.org/resource/tpm-library-specification/
 [VSA]: verification_summary.md
-[build image]: terminology.md#build-environment-model
+[build image]: terminology.md#build-image
 [confidential computing]: https://confidentialcomputing.io/wp-content/uploads/sites/10/2023/03/Common-Terminology-for-Confidential-Computing.pdf
+[execution context]: terminology.md#build-environment
 [hosted]: requirements.md#isolation-strength
+[boot process]: terminology.md#boot-process
+[build agent]: terminology.md#build-agent
+[build image producer]: terminology.md#build-image-producer
+[build platforms]: terminology.md#platform
+[compute platform]: terminology.md#compute-platform
+[host interface]: terminology.md#host-interface
+[measurement]: terminology.md#measurement
+[provenance]: terminology.md#provenance
+[quote]: terminology.md#quote
+[reference values]: terminology.md#reference-value
 [several classes]: #build-environment-threats
 [vTPM]: https://trustedcomputinggroup.org/about/what-is-a-virtual-trusted-platform-module-vtpm/

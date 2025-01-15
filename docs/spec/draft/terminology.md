@@ -99,18 +99,18 @@ of build types](/provenance/v1#index-of-build-types).
 
 | Primary Term | Description
 | --- | ---
-| Platform | System that allows tenants to run builds. Technically, it is the transitive closure of software and services that must be trusted to faithfully execute the build. It includes software, hardware, people, and organizations.
+| <span id="platform">Platform</span> | System that allows tenants to run builds. Technically, it is the transitive closure of software and services that must be trusted to faithfully execute the build. It includes software, hardware, people, and organizations.
 | Admin | A privileged user with administrative access to the platform, potentially allowing them to tamper with builds or the control plane.
 | Tenant | An untrusted user that builds an artifact on the platform. The tenant defines the build steps and external parameters.
 | Control plane | Build platform component that orchestrates each independent build execution and produces provenance. The control plane is managed by an admin and trusted to be outside the tenant's control.
 | Build | Process that converts input sources and dependencies into output artifacts, defined by the tenant and executed within a single build environment on a platform.
 | Steps | The set of actions that comprise a build, defined by the tenant.
-| Build environment | The independent execution context in which the build runs, initialized by the control plane. In the case of a distributed build, this is the collection of all such machines/containers/VMs that run steps.
+| <span id="build-environment">Build environment</span> | The independent execution context in which the build runs, initialized by the control plane. In the case of a distributed build, this is the collection of all such machines/containers/VMs that run steps.
 | Build caches | An intermediate artifact storage managed by the platform that maps intermediate artifacts to their explicit inputs. A build may share build caches with any subsequent build running on the platform.
 | External parameters | The set of top-level, independent inputs to the build, specified by a tenant and used by the control plane to initialize the build.
 | Dependencies | Artifacts fetched during initialization or execution of the build process, such as configuration files, source artifacts, or build tools.
 | Outputs | Collection of artifacts produced by the build.
-| Provenance | Attestation (metadata) describing how the outputs were produced, including identification of the platform and external parameters.
+| <span id="provenance">Provenance</span> | Attestation (metadata) describing how the outputs were produced, including identification of the platform and external parameters.
 
 <details><summary>Ambiguous terms to avoid</summary>
 
@@ -131,45 +131,50 @@ of build types](/provenance/v1#index-of-build-types).
 
 <p align="center"><img src="images/build-env-model.svg" alt="Build Environment Model"></p>
 
-The Build Environment (BuildEnv) track expands upon the [build model](#build-model)
-by explicitily separating the *build image* and *compute platform* from the abstract
-build environment and build platform.
-
-A typical build environment will go through the following lifecycle:
-
-1.  *Build image creation*: A build image producer creates different build
-    images through a dedicated build process. For the SLSA BuildEnv track,
-    the build image producer outputs provenance describing this process.
-2.  *Build environment instantiation*: The hosted build platform calls
-    into the *host interface* to create a new instance of a build environment
-    from a given build image. The *build agent* begins to wait for an incoming
-    build dispatch. For the SLSA BuildEnv track, the host interface in the
-    compute platform attests to the integrity of the environment's *initial
-    state* during its boot process.
-3.  *Build dispatch*: When the tenant dispatches a new build, the hosted
-    build platform assigns the build to a created build environment.
-    For the SLSA BuildEnv track, the build platform
-    attests to the binding between a build environment and *build ID*.
-4.  *Build execution*: Finally, the *build agent* within the
-    environment executes the tenant's build definition.
-
-The BuildEnv track uses the following roles, components, and concepts:
+The Build Environment (BuildEnv) track expands upon the
+[build model](#build-model) by explicitily separating the
+[build image](#build-image) and [compute platform](#compute-platform) from the
+abstract [build environment](#build-environment) and [build platform](#platform).
+Specifically, the BuildEnv track defines the following roles, components, and concepts:
 
 | Primary Term | Description
 | --- | ---
-| Build ID | An immutable identifier assigned uniquely to a specific execution of a tenant's build. In practice, the build ID may be an identifier, such as a UUID, associated with the build execution.
-| Build image | The template for a build environment, such as a VM or container image. Individual components of a build image include the root filesystem, pre-installed guest OS and packages, the build executor, and the build agent.
-| Build image producer | The party that creates and distributes build images. In practice, the build image producer may be the hosted build platform or a third party in a bring-your-own (BYO) build image setting.
-| Build agent | A build platform-provided program that interfaces with the build platform's control plane from within a running build environment. The build agent is also responsible for executing the tenant’s build definition, i.e., running the build. In practice, the build agent may be loaded into the build environment after instantiation, and may consist of multiple components. All build agent components must be measured along with the build image.
-| Build dispatch | The process of assigning a tenant's build to a pre-deployed build environment on a hosted build platform.
-| Compute platform | The compute system and infrastructure underlying a build platform, i.e., the host system (hypervisor and/or OS) and hardware. In practice, the compute platform and the build platform may be managed by the same or distinct organizations.
-| Host interface | The component in the compute platform that the hosted build platform uses to request resources for deploying new build environments, i.e., the VMM/hypervisor or container orchestrator.
-| Boot process | In the context of builds, the process of loading and executing the layers of firmware and/or software needed to start up a build environment on the host compute platform.
-| Measurement | The cryptographic hash of some component or system state in the build environment, including software binaries, configuration, or initialized run-time data.
-| Quote | (Virtual) hardware-signed data that contains one or more (virtual) hardware-generated measurements. Quotes may additionally include nonces for replay protection, firmware information, or other platform metadata.
-| Reference value | A specific measurement used as the good known value for a given build environment component or state.
+| <span id="build-id">Build ID</span> | An immutable identifier assigned uniquely to a specific execution of a tenant's build. In practice, the build ID may be an identifier, such as a UUID, associated with the build execution.
+| <span id="build-image">Build image</span> | The template for a build environment, such as a VM or container image. Individual components of a build image include the root filesystem, pre-installed guest OS and packages, the build executor, and the build agent.
+| <span id="build-image-producer">Build image producer</span> | The party that creates and distributes build images. In practice, the build image producer may be the hosted build platform or a third party in a bring-your-own (BYO) build image setting.
+| <span id="build-agent">Build agent</span> | A build platform-provided program that interfaces with the build platform's control plane from within a running build environment. The build agent is also responsible for executing the tenant’s build definition, i.e., running the build. In practice, the build agent may be loaded into the build environment after instantiation, and may consist of multiple components. All build agent components must be measured along with the build image.
+| <span id="build-dispatch">Build dispatch</span> | The process of assigning a tenant's build to a pre-deployed build environment on a hosted build platform.
+| <span id="compute-platform">Compute platform</span> | The compute system and infrastructure underlying a build platform, i.e., the host system (hypervisor and/or OS) and hardware. In practice, the compute platform and the build platform may be managed by the same or distinct organizations.
+| <span id="host-interface">Host interface</span> | The component in the compute platform that the hosted build platform uses to request resources for deploying new build environments, i.e., the VMM/hypervisor or container orchestrator.
+| <span id="boot-process">Boot process</span> | In the context of builds, the process of loading and executing the layers of firmware and/or software needed to start up a build environment on the host compute platform.
+| <span id="measurement">Measurement</span> | The cryptographic hash of some component or system state in the build environment, including software binaries, configuration, or initialized run-time data.
+| <span id="quote">Quote</span> | (Virtual) hardware-signed data that contains one or more (virtual) hardware-generated measurements. Quotes may additionally include nonces for replay protection, firmware information, or other platform metadata. (Based on the definition in [section 9.5.3.1](https://trustedcomputinggroup.org/wp-content/uploads/TPM-2.0-1.83-Part-1-Architecture.pdf) of the TPM 2.0 spec)
+| <span id="reference-value">Reference value</span> | A specific measurement used as the good known value for a given build environment component or state.
 
 **TODO:** Disambiguate similar terms (e.g., image, build job, build executor/runner)
+
+#### Build environment lifecycle
+
+A typical build environment will go through the following lifecycle:
+
+1.  *Build image creation*: A [build image producer](#build-image-producer)
+    creates different [build images](#build-image) through a dedicated build
+ process. For the SLSA BuildEnv track, the build image producer outputs
+ [provenance](#provenance) describing this process.
+2.  *Build environment instantiation*: The [hosted build platform](#platform)
+    calls into the [host interface](#host-interface) to create a new instance
+ of a build environment from a given build image. The
+ [build agent](#build-agent) begins to wait for an incoming
+ [build dispatch](#build-dispatch).
+ For the SLSA BuildEnv track, the host interface in the compute platform
+ attests to the integrity of the environment's initial state during its
+ [boot process](#boot-process).
+3.  *Build dispatch*: When the tenant dispatches a new build, the hosted
+    build platform assigns the build to a created build environment.
+    For the SLSA BuildEnv track, the build platform attests to the binding
+ between a build environment and [build ID](#build-id).
+4.  *Build execution*: Finally, the build agent within the environment executes
+    the tenant's build definition.
 
 ### Package model
 
