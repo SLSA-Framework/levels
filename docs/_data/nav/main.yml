@@ -1,0 +1,344 @@
+# Global side menu
+# Children are only visible when the item or one of its children is selected
+
+- title: Home
+  url: /
+
+- title: Current activities
+  url: /current-activities
+  description: What the SLSA community is currently working on
+
+- title: SLSA Specification 1.0
+  description: >
+    These pages describe SLSA's security levels and requirements for each track.
+    If you want to achieve SLSA a particular level, these are the requirements
+    you'll need to meet.
+  url: /spec/v1.0/
+  children:
+
+  - title: Understanding SLSA
+    description: >
+      These pages provide an overview of SLSA, how it helps protect against common
+      supply chain attacks, and common use cases. If you're new to SLSA or
+      supply chain security, start here.
+    children:
+
+    - title: What's new in v1.0
+      url: /spec/v1.0/whats-new
+      description: What's new in SLSA Version 1.0
+
+    - title: About SLSA
+      url: /spec/v1.0/about
+      description: An introductory guide to SLSA
+
+    - title: Supply chain threats
+      url: /spec/v1.0/threats-overview
+      description: An introduction to supply chain threats
+
+    - title: Use cases
+      url: /spec/v1.0/use-cases
+      description: Use cases
+
+    - title: Guiding principles
+      url: /spec/v1.0/principles
+      description: Use cases
+
+    - title: FAQ
+      url: /spec/v1.0/faq
+      description: Questions and more information
+
+    - title: Future directions
+      url: /spec/v1.0/future-directions
+      description: Additions and changes being considered for future SLSA versions
+
+  - title: Core specification
+    description: >
+      These pages describe SLSA's security levels and requirements for each track.
+      If you want to achieve SLSA a particular level, these are the requirements
+      you'll need to meet.
+    children:
+
+    - title: Terminology
+      url: /spec/v1.0/terminology
+      description: Terminology and model used by SLSA
+
+    - title: Security levels
+      url: /spec/v1.0/levels
+      description: Overview of SLSA's tracks and levels, intended for all audiences
+
+    - title: Producing artifacts
+      url: /spec/v1.0/requirements
+      description: Detailed technical requirements for producing software artifacts, intended for platform implementers
+
+    - title: Distributing provenance
+      url: /spec/v1.0/distributing-provenance
+      description: Detailed technical requirements for distributing provenance, intended for platform implementers and software distributors
+
+    - title: Verifying artifacts
+      url: /spec/v1.0/verifying-artifacts
+      description: Guidance for verifying software artifacts and their SLSA provenance, intended for platform implementers and software consumers
+
+    - title: Verifying build platforms
+      url: /spec/v1.0/verifying-systems
+      description: Guidelines for securing SLSA Build L3+ builders, intended for platform implementers
+
+    - title: Threats & mitigations
+      url: /spec/v1.0/threats
+      description: Detailed information about specific supply chain attacks and how SLSA helps
+
+  - title: Attestation formats
+    description: >
+      These pages include the concrete schemas for SLSA attestations. The
+      Provenance and VSA formats are recommended, but not required by the
+      specification.
+    children:
+
+    - title: General model
+      url: /spec/v1.0/attestation-model
+      description: General attestation mode
+
+    - title: Provenance
+      url: /spec/v1.0/provenance
+      description: Suggested provenance format and explanation
+
+    - title: Verification Summary
+      url: /spec/v1.0/verification_summary
+      description: Suggested VSA format and explanation
+
+  - title: Single-page view
+    url: /spec/v1.0/onepage
+    skip_next_prev: true  # don't show as a next/prev link
+
+- title: SLSA Specification 1.1
+  description: >
+    These pages describe SLSA's security levels and requirements for each track.
+    If you want to achieve SLSA a particular level, these are the requirements
+    you'll need to meet.
+  url: /spec/v1.1/
+  children:
+
+  - title: Understanding SLSA
+    description: >
+      These pages provide an overview of SLSA, how it helps protect against common
+      supply chain attacks, and common use cases. If you're new to SLSA or
+      supply chain security, start here.
+    children:
+
+    - title: What's new in v1.1
+      url: /spec/v1.1/whats-new
+      description: What's new in SLSA Version 1.1
+
+    - title: About SLSA
+      url: /spec/v1.1/about
+      description: An introductory guide to SLSA
+
+    - title: Supply chain threats
+      url: /spec/v1.1/threats-overview
+      description: An introduction to supply chain threats
+
+    - title: Use cases
+      url: /spec/v1.1/use-cases
+      description: Use cases
+
+    - title: Guiding principles
+      url: /spec/v1.1/principles
+      description: Use cases
+
+    - title: FAQ
+      url: /spec/v1.1/faq
+      description: Questions and more information
+
+    - title: Future directions
+      url: /spec/v1.1/future-directions
+      description: Additions and changes being considered for future SLSA versions
+
+  - title: Core specification
+    description: >
+      These pages describe SLSA's security levels and requirements for each track.
+      If you want to achieve SLSA a particular level, these are the requirements
+      you'll need to meet.
+    children:
+
+    - title: Terminology
+      url: /spec/v1.1/terminology
+      description: Terminology and model used by SLSA
+
+    - title: Security levels
+      url: /spec/v1.1/levels
+      description: Overview of SLSA's tracks and levels, intended for all audiences
+
+    - title: Producing artifacts
+      url: /spec/v1.1/requirements
+      description: Detailed technical requirements for producing software artifacts, intended for platform implementers
+
+    - title: Distributing provenance
+      url: /spec/v1.1/distributing-provenance
+      description: Detailed technical requirements for distributing provenance, intended for platform implementers and software distributors
+
+    - title: Verifying artifacts
+      url: /spec/v1.1/verifying-artifacts
+      description: Guidance for verifying software artifacts and their SLSA provenance, intended for platform implementers and software consumers
+
+    - title: Verifying build platforms
+      url: /spec/v1.1/verifying-systems
+      description: Guidelines for securing SLSA Build L3+ builders, intended for platform implementers
+
+    - title: Threats & mitigations
+      url: /spec/v1.1/threats
+      description: Detailed information about specific supply chain attacks and how SLSA helps
+
+  - title: Attestation formats
+    description: >
+      These pages include the concrete schemas for SLSA attestations. The
+      Provenance and VSA formats are recommended, but not required by the
+      specification.
+    children:
+
+    - title: General model
+      url: /spec/v1.1/attestation-model
+      description: General attestation mode
+
+    - title: Provenance
+      url: /spec/v1.1/provenance
+      description: Suggested provenance format and explanation
+
+    - title: Verification Summary
+      url: /spec/v1.1/verification_summary
+      description: Suggested VSA format and explanation
+
+  - title: Single-page view
+    url: /spec/v1.1/onepage
+    skip_next_prev: true  # don't show as a next/prev link
+
+- title: SLSA Working Draft
+  url: /spec/draft/
+  children:
+
+  - title: Understanding SLSA
+    description: >
+      These pages provide an overview of SLSA, how it helps protect against common
+      supply chain attacks, and common use cases. If you're new to SLSA or
+      supply chain security, start here.
+    children:
+
+    - title: What's new
+      url: /spec/draft/whats-new
+      description: The changes brought by this Working Draft.
+
+    - title: About SLSA
+      url: /spec/draft/about
+      description: An introductory guide to SLSA
+
+    - title: Supply chain threats
+      url: /spec/draft/threats-overview
+      description: An introduction to supply chain threats
+
+    - title: Use cases
+      url: /spec/draft/use-cases
+      description: Use cases
+
+    - title: Guiding principles
+      url: /spec/draft/principles
+      description: Use cases
+
+    - title: FAQ
+      url: /spec/draft/faq
+      description: Questions and more information
+
+    - title: Future directions
+      url: /spec/draft/future-directions
+      description: Additions and changes being considered for future SLSA versions
+
+  - title: Core specification
+    description: >
+      These pages describe SLSA's security levels and requirements for each track.
+      If you want to achieve SLSA a particular level, these are the requirements
+      you'll need to meet.
+    children:
+
+    - title: Terminology
+      url: /spec/draft/terminology
+      description: Terminology and model used by SLSA
+
+    - title: Security levels
+      url: /spec/draft/levels
+      description: Overview of SLSA's tracks and levels, intended for all audiences
+
+    - title: Producing artifacts
+      url: /spec/draft/requirements
+      description: Detailed technical requirements for producing software artifacts, intended for platform implementers
+
+    - title: Distributing provenance
+      url: /spec/draft/distributing-provenance
+      description: Detailed technical requirements for distributing provenance, intended for platform implementers and software distributors
+
+    - title: Verifying artifacts
+      url: /spec/draft/verifying-artifacts
+      description: Guidance for verifying software artifacts and their SLSA provenance, intended for platform implementers and software consumers
+
+    - title: Verifying build platforms
+      url: /spec/draft/verifying-systems
+      description: Guidelines for securing SLSA Build L3+ builders, intended for platform implementers
+
+    - title: Integrity levels for attested build environments
+      url: /spec/draft/attested-build-env-levels
+      description: Overview of SLSA's Attested Build Environment track, intended for all audiences
+
+    - title: Threats & mitigations
+      url: /spec/draft/threats
+      description: Detailed information about specific supply chain attacks and how SLSA helps
+
+    - title: Securing Source Code
+      url: /spec/draft/source-requirements
+      description: Overview of the Source track
+
+  - title: Attestation formats
+    description: >
+      These pages include the concrete schemas for SLSA attestations. The
+      Provenance and VSA formats are recommended, but not required by the
+      specification.
+    children:
+
+    - title: General model
+      url: /spec/draft/attestation-model
+      description: General attestation mode
+
+    - title: Provenance
+      url: /spec/draft/provenance
+      description: Suggested provenance format and explanation
+
+    - title: Verification Summary
+      url: /spec/draft/verification_summary
+      description: Suggested VSA format and explanation
+
+  - title: Single-page view
+    url: /spec/draft/onepage
+    skip_next_prev: true  # don't show as a next/prev link
+
+- title: How to SLSA
+  description: >
+    These instructions tell you how to apply the core SLSA specification to use
+    SLSA in your specific situation.
+  url: /how-to/
+  children:
+
+  - title: For developers
+    url: /how-to/get-started
+    description: How to apply SLSA requirements to your build
+
+  - title: For organizations
+    url: /how-to/how-to-orgs
+    description: How to apply SLSA to an organization
+
+  - title: For infrastructure providers
+    url: /how-to/how-to-infra
+    description:  How to implement SLSA in source, build, and package platforms
+
+- title: Specification stages
+  url: /spec-stages
+
+- title: Community
+  url: /community
+
+- title: Blog
+  url: /blog

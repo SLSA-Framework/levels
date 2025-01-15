@@ -1,8 +1,11 @@
 # Pages that show in the nav aside.
+- title: Home
+  url: /
+
 - title: Specifications
   children:
 
-    - title: SLSA
+    - title: SLSA Specification 1.0
       children:
 
       - title: Introduction
@@ -46,7 +49,7 @@
       children:
 
       - title: General Model
-        url: /attestation-model
+        url: /spec/v1.0-rc1/attestation-model
 
       - title: Provenance
         url: /spec/v1.0-rc1/provenance

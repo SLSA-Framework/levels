@@ -10,11 +10,13 @@
         <a class="nav-link{% if subitem.url == page.url %} is-active{% endif %}" href="{{ subitem.url | relative_url }}">
           {{ subitem.title | escape }}
         </a>
-      {%- elsif subitem.children.size > 0 %}
-        <span class="section-title">{{ subitem.title | escape }}</span>
-        {% include nav-level.html collection=subitem.children %}
       {%- else %}
-        <em>{{ subitem.title | escape }}</em>
+        <span class="section-title">{{ subitem.title | escape }}</span>
+      {%- endif %}
+      {%- if subitem.children.size > 0 %}
+	{%- if page.url contains subitem.url or include.expand %}
+          {% include nav-level.html collection=subitem.children expand=true %}
+	{%- endif %}
       {%- endif %}
     </li>
     {%- endfor %}

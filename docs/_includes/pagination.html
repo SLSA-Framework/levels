@@ -1,18 +1,37 @@
 {%- comment %}Render next/previous links based on the nav bar.{% endcomment %}
 
-{%- comment %}This chunk is copied from nav.html; it should be kept in sync.{%- endcomment %}
-{%- assign url_parts = page.url | split: '/' %}
-{%- assign part_1 = url_parts[1] %}
-{%- assign part_2 = url_parts[2] %}
-{%- assign key = site.data.nav.config.url_to_key[part_1]
+{%- comment %}Find the right collection from the navigation data{% endcomment %}
+{%- assign nav = site.data.nav["main"] %}
+{%- for item in nav %}
+  {% if item.url == page.dir or item.url == page.url %}
+    {% assign this = item %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+{%- if this %}
+  {%- comment %}matching_pages = array of "[URL] [TITLE]"{% endcomment %}
+  {%- capture matching_pages_newline_separated %}
+  {%- include pagination-parse.liquid collection=this.children %}
+  {%- endcapture %}
+  {%- comment %}Include the parent/this page{% endcomment %}
+  {%- assign thisline = {{this.url}} | append: "<ENDURL>" | append: {{this.title}} | append: "<ENDTITLE>" %}
+  {%- assign matching_pages_newline_separated = matching_pages_newline_separated | prepend: thisline %}
+{%- else %}
+  {%- comment %}Didn't find item in main menu, revert to old behavior for backward compatibility{% endcomment %}
+  {%- assign url_parts = page.url | split: '/' %}
+  {%- assign part_1 = url_parts[1] %}
+  {%- assign part_2 = url_parts[2] %}
+  {%- assign key = site.data.nav.config.url_to_key[part_1]
       | default: site.data.nav.config.url_to_key[part_2]
       | default: site.data.nav.config.url_to_key["latest"] %}
-{%- assign nav = site.data.nav[key] %}
+  {%- assign this = site.data.nav[key] %}
+  {%- comment %}matching_pages = array of "[URL] [TITLE]"{% endcomment %}
+  {%- capture matching_pages_newline_separated %}
+  {%- include pagination-parse.liquid collection=this %}
+  {%- endcapture %}
+{% endif %}
 
-{%- comment %}matching_pages = array of "[URL] [TITLE]"{% endcomment %}
-{%- capture matching_pages_newline_separated %}
-{%- include pagination-parse.liquid first_url_part=part_1 collection=nav %}
-{%- endcapture %}
+
 {%- assign matching_pages = matching_pages_newline_separated | split: "<ENDTITLE>" %}
 
 {%- for entry in matching_pages %}

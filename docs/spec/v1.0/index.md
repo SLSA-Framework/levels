@@ -10,21 +10,25 @@ levels that describe increasing security guarantees.
 This is **version 1.0** of the SLSA specification, which defines the SLSA
 levels and recommended attestation formats, including provenance.
 
-{%- for section in site.data.nav.v10 %}
-{%- if section.children %}
+{%- for section in site.data.nav.main %}
+{%- if section.url == page.url %}
+{%- for subsection in section.children %}
+{%- if subsection.children %}
 
-## {{ section.title }}
+## {{ subsection.title }}
 
-{{ section.description }}
+{{ subsection.description }}
 
 <!-- markdownlint-capture -->
 <!-- markdownlint-disable MD055 MD056 -->
 | Page | Description
 | ---- | -----------
-{%- for child in section.children %}
+{%- for child in subsection.children %}
 | [{{child.title}}]({{child.url | relative_url}}) | {{child.description}}
 {%- endfor %}
 <!-- markdownlint-restore -->
 
+{%- endif %}
+{%- endfor %}
 {%- endif %}
 {%- endfor %}

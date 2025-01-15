@@ -74,3 +74,7 @@
 # Removed files. Keep URLs working forever.
 /example       https://github.com/slsa-framework/slsa/blob/a25364a3b312f572e4620c812820249853bb40e5/docs/example.md  301
 /example.md    https://github.com/slsa-framework/slsa/blob/a25364a3b312f572e4620c812820249853bb40e5/docs/example.md  301
+
+/get-started            /how-to/get-started         301
+/how-to-infra           /how-to/how-to-infra        301
+/how-to-orgs            /how-to/how-to-orgs         301

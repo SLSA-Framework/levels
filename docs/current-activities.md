@@ -38,5 +38,5 @@ is in draft.
 
 ### Dependency track
 
-Building upon the foundation laid by [S2C2F](https://openssf.org/projects/s2c2f/), the depedency track defines
+Building upon the foundation laid by [S2C2F](https://openssf.org/projects/s2c2f/), the dependency track defines
 requirements for consuming dependencies.

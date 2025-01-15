@@ -4,12 +4,9 @@
 {% endcomment -%}
 {% for entry in include.collection -%}
   {% if entry.url and entry.skip_next_prev != true -%}
-    {% assign parts = entry.url | split: '/' -%}
-    {% if parts[1] == include.first_url_part -%}
-      {{entry.url}}<ENDURL>{{entry.title}}<ENDTITLE>
-    {%- endif -%}
-  {% endif -%}
+    {{entry.url}}<ENDURL>{{entry.title}}<ENDTITLE>
+  {%- endif -%}
   {% if entry.children -%}
-    {% include pagination-parse.liquid first_url_part=part_1 collection=entry.children -%}
+    {% include pagination-parse.liquid collection=entry.children -%}
   {% endif -%}
 {% endfor -%}

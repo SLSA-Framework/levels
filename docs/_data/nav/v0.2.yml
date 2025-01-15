@@ -1,4 +1,7 @@
 # Pages that show in the nav aside.
+- title: Home
+  url: /
+
 - title: Specifications
   children:
 
@@ -34,7 +37,7 @@
       children:
 
       - title: General Model
-        url: /attestation-model
+        url: /spec/v0.2/attestation-model
 
       - title: Provenance
         url: /spec/v0.2/provenance

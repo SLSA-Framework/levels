@@ -1,12 +1,15 @@
 # Pages that show in the nav aside and in the spec index page.
 # The spec index does not show top-level elements without children.
 
-- title: Overview
-  url: /spec/v1.1/
+- title: Home
+  url: /
 
 - title: Current activities
   url: /current-activities
   description: What the SLSA community is currently working on
+
+- title: SLSA Specification 1.1
+  url: /spec/v1.1/
 
 - title: Understanding SLSA
   description: >
@@ -86,7 +89,7 @@
   children:
 
   - title: General model
-    url: /attestation-model
+    url: /spec/v1.1/attestation-model
     description: General attestation mode
 
   - title: Provenance
