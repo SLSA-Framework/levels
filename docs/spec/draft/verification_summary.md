@@ -93,6 +93,13 @@ to establish minimum requirements on dependencies SLSA levels may use
     ...
   ],
   "verificationResult": "<PASSED|FAILED>",
+  "policyViolations": [
+    {
+      "name": "<ViolationName>",
+      "description": "<ViolationDescription>"
+    },
+    ...
+  ]
   "verifiedLevels": ["<SlsaResult>"],
   "dependencyLevels": {
     "<SlsaResult>": <Int>,
@@ -188,6 +195,11 @@ of the other top-level fields, such as `subject`, see [Statement]._
 `verificationResult` _string, required_
 
 > Either “PASSED” or “FAILED” to indicate if the artifact passed or failed the policy verification.
+
+<a id="policyViolations"></a>
+`policyViolations` _array (object), opational_
+
+> A collection of name and description pairs that can be output by the policy evaluator to provide details on policy violations.
 
 <a id="verifiedLevels"></a>
 `verifiedLevels` _array ([SlsaResult]), required_
