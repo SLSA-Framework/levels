@@ -35,7 +35,7 @@ Describe how an artifact or set of artifacts was produced so that:
 -   Others can rebuild the artifact, if desired.
 
 This predicate is the RECOMMENDED way to satisfy the SLSA v1.0 [provenance
-requirements](requirements#provenance-generation).
+requirements].
 
 ## Model
 
@@ -85,7 +85,7 @@ The model is as follows:
 -   During execution, the build process might communicate with the build
     platform's control plane and/or build caches. This communication is not
     captured directly in the provenance, but is instead implied by `builder.id`
-    and subject to [SLSA Requirements](requirements.md). Such
+    and subject to [SLSA Build Requirements](../../build/v1.0/requirements.md). Such
     communication SHOULD NOT influence the definition of the build; if it does,
     it SHOULD go in `resolvedDependencies` instead.
 
@@ -347,7 +347,7 @@ REQUIRED for SLSA Build L1: `id`
 <td>string (<a href="https://github.com/in-toto/attestation/blob/7aefca35a0f74a6e0cb397a8c4a76558f54de571/spec/v1/field_types.md#typeuri">TypeURI</a>)<td>
 
 URI indicating the transitive closure of the trusted build platform. This is
-[intended](verifying-artifacts#step-1-check-slsa-build-level)
+[intended](../../build/v1.0/verifying-artifacts#step-1-check-slsa-build-level)
 to be the sole determiner of the SLSA Build level.
 
 If a build platform has multiple modes of operations that have differing
@@ -384,7 +384,7 @@ the build and record the provenance. This includes not only the software but the
 hardware and people involved in running the service. For example, a particular
 instance of [Tekton](https://tekton.dev/) could be a build platform, while
 Tekton itself is not. For more info, see [Build
-model](terminology#build-model).
+model](../../build/v1.0/terminology#build-model).
 
 The `id` MUST reflect the trust base that consumers care about. How detailed to
 be is a judgement call. For example, GitHub Actions supports both GitHub-hosted
@@ -454,7 +454,7 @@ information that is not captured in a standard field. Guidelines:
 
 ## Verification
 
-[Verification]: verifying-artifacts
+[Verification]: ../../build/v1.0/verifying-artifacts
 
 Please see [Verifying Artifacts][Verification] for a detailed discussion of
 provenance verification.
@@ -597,3 +597,4 @@ Initial version, named "in-toto.io/Provenance"
 [purl]: https://github.com/package-url/purl-spec
 [threats]: threats
 [trusted]: principles#trust-systems-verify-artifacts
+[provenance requirements]: ../../build/v1.0/requirements#provenance-generation

@@ -64,7 +64,7 @@ This includes the threat of an authorized individual introducing an unauthorized
 change---in other words, an insider threat.
 
 SLSA v1.0 does not address source threats, but we anticipate doing so in a
-[future version](current-activities.md#source-track). In the meantime, the
+[future version](current-activities#source-track). In the meantime, the
 threats and potential mitigations listed here show how SLSA v1.0 can fit into a
 broader supply chain security program.
 

@@ -9,7 +9,7 @@ supply chain threats that SLSA is aiming to protect against, see [Supply chain t
 
 The examples on this page are meant to:
 
--   Explain the reasons for each of the SLSA [requirements](requirements.md).
+-   Explain the reasons for each of the SLSA [requirements].
 -   Increase confidence that the SLSA requirements are sufficient to achieve the
     desired [level](levels.md) of integrity protection.
 -   Help implementers better understand what they are protecting against so that
@@ -40,7 +40,7 @@ along those same lines. Keep in mind that dependencies are
 [highly recursive](#dependency-threats), so each dependency has its own threats
 (A) through (I), and the same for *their* dependencies, and so on. For a more
 detailed explanation of the supply chain model, see
-[Terminology](terminology.md).
+[Terminology].
 
 Importantly, producers and consumers face *aggregate* risk across all of the
 software they produce and consume, respectively. Many organizations produce
@@ -57,7 +57,7 @@ This includes the threat of an authorized individual introducing an unauthorized
 change---in other words, an insider threat.
 
 SLSA v1.0 does not address source threats, but we anticipate doing so in a
-[future version](current-activities.md#source-track). In the meantime, the
+[future version](/current-activities#source-track). In the meantime, the
 threats and potential mitigations listed here show how SLSA v1.0 can fit into a
 broader supply chain security program.
 
@@ -360,7 +360,7 @@ source, dependency, and/or process that is not intended by the software
 producer.
 
 The SLSA Build track mitigates these threats when the consumer
-[verifies artifacts](verifying-artifacts.md) against expectations, confirming
+[verifies artifacts] against expectations, confirming
 that the artifact they received was built in the expected manner.
 
 ### (D) External build parameters
@@ -789,7 +789,7 @@ packages. If a misconfigured victim attempts to install attacker's package with
 an internal name but from the public registry, then verification against
 expectations will fail.
 
-For more information see [Verifying artifacts](/spec/v1.1/verifying-artifacts)
+For more information see [Verifying artifacts](../../build/v1.0/verifying-artifacts)
 and [Defender's Perspective: Dependency Confusion and Typosquatting Attacks](/blog/2024/08/dep-confusion-and-typosquatting).
 
 </details>
@@ -854,7 +854,7 @@ threats.
     time" as an alternative.
 -->
 
-[apply SLSA recursively]: verifying-artifacts.md#step-3-optional-check-dependencies-recursively
+[apply SLSA recursively]: ../../build/v1.0/verifying-artifacts#step-3-optional-check-dependencies-recursively
 
 ### Build dependency
 
@@ -886,7 +886,7 @@ output artifact.
 including OS images, as any other artifact to be verified prior to use.
 The threats described in this document apply recursively to build tooling
 as do the mitigations and examples.  A future
-[Build Environment track](current-activities#build-environment-track) may
+[Build Environment track](/current-activities#build-environment-track) may
 provide more comprehensive guidance on how to address more specfiic
 aspects of this threat.
 
@@ -1063,12 +1063,15 @@ collision resistance.
 
 <!-- Links -->
 
-[apply SLSA recursively]: verifying-artifacts.md#step-3-optional-check-dependencies-recursively
-[authentic]: requirements.md#provenance-authentic
-[exists]: requirements.md#provenance-exists
-[isolated]: requirements.md#isolated
-[unforgeable]: requirements.md#provenance-unforgeable
+[apply SLSA recursively]: ../../build/v1.0/verifying-artifacts#step-3-optional-check-dependencies-recursively
+[authentic]: ../../build/v1.0/requirements#provenance-authentic
+[exists]: ../../build/v1.0/requirementsrequirements.md#provenance-exists
+[isolated]: ../../build/v1.0/requirementsrequirements.md#isolated
+[unforgeable]: ../../build/v1.0/requirementsrequirements.md#provenance-unforgeable
 [secure-by-design]: https://www.cisa.gov/securebydesign
 [supply chain threats]: threats-overview
 [vsa]: verification_summary
 [vsa_verification]: verification_summary#how-to-verify
+[Terminology]: ../../build/v1.0/terminology.md
+[requirements]: ../../build/v1.0/requirements.md
+[verifies artifacts]: ../../build/v1.0/verifying-artifacts.md

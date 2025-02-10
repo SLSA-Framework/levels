@@ -16,7 +16,7 @@ SLSA could help. For a more technical discussion, see [Threats & mitigations](th
 
 **Note that SLSA does not currently address all of the threats presented here.**
 See [Threats & mitigations](threats.md) for what is currently addressed and
-[Terminology](terminology.md) for an explanation of the supply chain model.
+[Terminology] for an explanation of the supply chain model.
 
 SLSA's primary focus is supply chain integrity, with a secondary focus on
 availability. Integrity means protection against tampering or unauthorized
@@ -74,7 +74,7 @@ For close source software SLSA does not provide any solutions for malicious prod
 <td>E
 <td>Build process
 <td><a href="https://www.crowdstrike.com/blog/sunspot-malware-technical-analysis/">SolarWinds</a>: Attacker compromised the build platform and installed an implant that injected malicious behavior during each build.
-<td>Higher SLSA levels require <a href="requirements#build-requirements">stronger security controls for the build platform</a>, making it more difficult to compromise and gain persistence.
+<td>Higher SLSA levels require <a href="../../build/v1.0/requirements">stronger security controls for the build platform</a>, making it more difficult to compromise and gain persistence.
 <tr>
 <td>F
 <td>Artifact publication
@@ -120,3 +120,5 @@ For close source software SLSA does not provide any solutions for malicious prod
 A SLSA level helps give consumers confidence that software has not been tampered
 with and can be securely traced back to source—something that is difficult, if
 not impossible, to do with most software today.
+
+[Terminology]: ../../build/v1.0/terminology

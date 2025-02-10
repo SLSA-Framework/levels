@@ -1,4 +1,7 @@
-# SLSA Source Track
+---
+title: SLSA Source Track
+layout: specifications
+---
 
 ## Outstanding TODOs
 
@@ -19,7 +22,7 @@ Consumers can examine the various source provenance attestations to determine if
 
 | Term | Description
 | --- | ---
-| Source | An identifiable set of text and binary files and associated metadata. Source is regularly used as input to a build system (see [SLSA Build Track](requirements.md)).
+| Source | An identifiable set of text and binary files and associated metadata. Source is regularly used as input to a build system (see [SLSA Build Track]).
 | Organization | A collection of people who collectively create the Source. Examples of organizations include open-source projects, a company, or a team within a company. The organization defines the goals and methods of the source.
 | Version Control System (VCS)| Software for tracking and managing changes to source. Git and Subversion are examples of version control systems.
 | Revision | A specific state of the source with an identifier provided by the version control system. As an example, you can identify a git revision by its tree hash.
@@ -316,7 +319,7 @@ Summary attestations are issued by some authority that has sufficient evidence t
 revision's source level.  Summary attestations convey properties about the revision as a whole and summarize properties computed over all
 the changes that contributed to that revision over its history.
 
-The source track issues summary attestations using [Verification Summary Attestations (VSAs)](./verification_summary.md) as follows:
+The source track issues summary attestations using [Verification Summary Attestations (VSAs)] as follows:
 
 1.  `subject.uri` SHOULD be set to a human readable URI of the revision.
 2.  `subject.digest` MUST include the revision identifier (e.g. `gitCommit`) and MAY include other digests over the contents of the revision (e.g. `gitTree`, `dirHash`, etc...).
@@ -372,7 +375,7 @@ Example implementations:
 
 #### How to verify
 
--   VSAs for source revisions MUST follow [the standard method of VSA verification](./verification_summary.md#how-to-verify).
+-   VSAs for source revisions MUST follow [the standard method of VSA verification](../../spec/draft/verification_summary.md#how-to-verify).
 -   Users SHOULD check that an allowed branch is listed in `subject.annotations.source_branches` to ensure the revision is from an appropriate context within the repository.
 -   Users SHOULD check that the expected `SLSA_SOURCE_LEVEL_` is listed within `verifiedLevels`.
 -   Users MUST ignore any unrecognized values in `verifiedLevels`.
@@ -407,3 +410,5 @@ Example source provenance attestations:
  describe which source quality tools were run on the revision.
 
 [^1]: in-toto attestations allow non-cryptographic digest types: https://github.com/in-toto/attestation/blob/main/spec/v1/digest_set.md#supported-algorithms.
+[SLSA Build Track]: ../../build/v1.0
+[Verification Summary Attestations (VSAs)]: ../../spec/draft/verification_summary.md

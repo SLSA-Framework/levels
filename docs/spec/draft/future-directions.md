@@ -42,7 +42,7 @@ of build platforms as they are operated.
 The initial [draft version (v0.1)] of SLSA included a section on
 [common requirements](../v0.1/requirements.md#common-requirements) that formed
 the foundation of the guidance for
-[verifying build systems](verifying-systems.md), which **may or may not** form
+[verifying build systems](../../build/v1.0/verifying-systems.md), which **may or may not** form
 the basis for a future Build Platform Operations track:
 
 -   Controls for approval, logging, and auditing of all physical and remote

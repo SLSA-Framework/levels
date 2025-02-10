@@ -15,7 +15,7 @@ Learn how you can [get involved](/community#get-involved)!
 A Source track will provide protection against tampering of the source code
 prior to the build.
 
-The current [draft version](/spec/draft/source-requirements.md) describes levels
+The current [draft version](/source/draft/source-requirements.md) describes levels
 of increasing tamper resistance and ways consumers might verify properties
 of source revisions using SLSA source provenance attestations.
 
@@ -24,7 +24,7 @@ of source revisions using SLSA source provenance attestations.
 The goal of a Build Environment track is to enable the detection of tampering
 with core components of the compute environment executing builds.
 
-The current [draft version](/spec/draft/attested-build-env-levels.md)
+The current [draft version](/build-env/draft)
 of the Build Environment track includes the following requirements:
 
 -   Generation and verification of SLSA Build Provenance for build images.

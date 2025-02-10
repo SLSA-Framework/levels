@@ -1,9 +1,10 @@
 ---
 title: Verifying build platforms
 description: Guidelines for assessing build platform security.
+layout: specifications
 ---
 
-One of SLSA's guiding [principles](principles.md) is to "trust platforms, verify
+One of SLSA's guiding [principles](../../spec/v1.0/principles.md) is to "trust platforms, verify
 artifacts". However, consumers cannot trust platforms to produce Build L3
 artifacts and provenance unless they have some proof that the provenance is
 [unforgeable](requirements.md#provenance-unforgeable) and the builds are
@@ -11,7 +12,7 @@ artifacts and provenance unless they have some proof that the provenance is
 
 This page describes the parts of a build platform that consumers SHOULD assess
 and provides sample questions consumers can ask when assessing a build platform.
-See also [Threats & mitigations](threats.md) and the
+See also [Threats & mitigations](../../spec/v1.0/threats.md) and the
 [build model](terminology.md#build-model).
 
 ## Threats
@@ -63,10 +64,10 @@ following types of adversaries.
     -   Access the control plane's cryptographic secrets.
     -   Remotely access build environments (e.g. via SSH).
 
-[D]: threats.md#d-external-build-parameters
-[E]: threats.md#e-build-process
-[F]: threats.md#f-artifact-publication
-[G]: threats.md#g-distribution-channel
+[D]: ../../spec/v1.0/threats#d-external-build-parameters
+[E]: ../../spec/v1.0/threats#e-build-process
+[F]: ../../spec/v1.0/threats#f-artifact-publication
+[G]: ../../spec/v1.0/threats#g-distribution-channel
 
 ## Build platform components
 

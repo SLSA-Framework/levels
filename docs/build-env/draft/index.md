@@ -1,7 +1,16 @@
 ---
-title: Build Environment track
-description: This page gives an overview of the SLSA Build Environment track and its levels, describing their security objectives and general requirements.
+title: Build Environment Track
+description: The SLSA Build Environment track specification.
+layout: specifications
 ---
+
+{{ page.description }}
+
+SLSA is organized into a series of levels and tracks that provide increasing
+supply chain security guarantees on various aspects of the supply chain
+security. This specification defines the different security levels of the *SLSA
+Build Environment track*. For a general overview see the different [tracks and
+levels].
 
 ## Rationale
 
@@ -36,14 +45,14 @@ environment, and the compute platform they used.
 | [BuildEnv L2] | Attested build environment instantiation | Tampering via the build platform's control plane | The compute platform's host interface
 | [BuildEnv L3] | Hardware-attested build environment | Tampering via the compute platform's host interface | The compute platform's hardware
 
-> :warning:
-> The Build Environment track L1+ currently requires a [hosted] build platform.
-> A future version of this track may generalize requirements to cover bare-metal
-> build environments.
+**Warning**:
+The Build Environment track L1+ currently requires a [hosted] build platform.
+A future version of this track may generalize requirements to cover bare-metal
+build environments.
 
-> :grey_exclamation:
-> We may consider the addition of an L4 to the Build Environment track, which
-> covers hardware-attested runtime integrity checking during a build.
+**Note**:
+We may consider the addition of an L4 to the Build Environment track, which
+covers hardware-attested runtime integrity checking during a build.
 
 ### Build environment threats
 
@@ -285,9 +294,10 @@ TODO
 
 <!-- Link definitions -->
 
-[Build L1]: levels.md#build-l1
-[Build L2]: levels.md#build-l2
-[Build L3]: levels.md#build-l3
+[tracks and levels]: ../../spec/draft/levels
+[Build L1]: ../../build/v1.0/levels#build-l1
+[Build L2]: ../../build/v1.0/levels#build-l2
+[Build L3]: ../../build/v1.0/levels#build-l3
 [BuildEnv L0]: #buildenv-l0
 [BuildEnv L1]: #buildenv-l1
 [BuildEnv L2]: #buildenv-l2
@@ -295,22 +305,22 @@ TODO
 [Release Attestation]: https://github.com/in-toto/attestation/blob/main/spec/predicates/release.md
 [SCAI]: https://github.com/in-toto/attestation/blob/main/spec/predicates/scai.md
 [Secure Boot]: https://wiki.debian.org/SecureBoot#What_is_UEFI_Secure_Boot.3F
-[SLSA Build Provenance]: provenance.md
+[SLSA Build Provenance]: ../../spec/draft/provenance.md
 [TPM]: https://trustedcomputinggroup.org/resource/tpm-library-specification/
-[VSA]: verification_summary.md
-[build image]: terminology.md#build-image
+[VSA]: ../../spec/draft/verification_summary.md
+[build image]: ../../build/v1.0/terminology#build-image
 [confidential computing]: https://confidentialcomputing.io/wp-content/uploads/sites/10/2023/03/Common-Terminology-for-Confidential-Computing.pdf
-[execution context]: terminology.md#build-environment
-[hosted]: requirements.md#isolation-strength
-[boot process]:  terminology.md#boot-process
-[build agent]: terminology.md#build-agent
-[build image producer]: terminology.md#build-image-producer
-[build platforms]: terminology.md#platform
-[compute platform]: terminology.md#compute-platform
-[host interface]: terminology.md#host-interface
-[measurement]: terminology.md#measurement
-[provenance]: terminology.md#provenance
-[quote]: terminology.md#quote
-[reference values]: terminology.md#reference-value
+[execution context]: ../../build/v1.0/terminology#build-environment
+[hosted]: ../../build/v1.0/requirements#isolation-strength
+[boot process]:  ../../build/v1.0/terminology#boot-process
+[build agent]: ../../build/v1.0/terminology#build-agent
+[build image producer]: ../../build/v1.0/terminology#build-image-producer
+[build platforms]: ../../build/v1.0/terminology#platform
+[compute platform]: ../../build/v1.0/terminology#compute-platform
+[host interface]: ../../build/v1.0/terminology#host-interface
+[measurement]: ../../build/v1.0/terminology#measurement
+[provenance]: ../../build/v1.0/terminology#provenance
+[quote]: ../../build/v1.0/terminology#quote
+[reference values]: ../../build/v1.0/terminology#reference-value
 [several classes]: #build-environment-threats
 [vTPM]: https://trustedcomputinggroup.org/about/what-is-a-virtual-trusted-platform-module-vtpm/

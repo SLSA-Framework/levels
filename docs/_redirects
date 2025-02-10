@@ -55,9 +55,11 @@
 /provenance/v1.1        /spec/v1.1/provenance       301
 /provenance/draft       /spec/draft/provenance      301
 
-/spec                   /spec/v1.0              302
-/spec/faq               /spec/v1.0/faq          302
-/spec/v1/*              /spec/v1.0/:splat       302
+/spec                   /spec/v1.0                  302
+/spec/faq               /spec/v1.0/faq              302
+/spec/v1/*              /spec/v1.0/:splat           302
+/spec/current-activities /current-activities        301 # permanent
+/spec/v1.1/current-activities /current-activities   301 # permanent
 
 # Note: Versions prior to v1.0 stay in /verification_summary.
 /verification_summary           /spec/v1.0/verification_summary     302  # floating

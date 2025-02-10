@@ -16,9 +16,11 @@ Draft relative to the prior release, [v1.0].
 -   It is now recommended that the `digest` field of `ResourceDescriptor` is
     set in a Verification Summary Attestation's (VSA) `policy` object.
 -   Further refine the [threat model](threats).
--   Add draft of [SLSA Source Track](source-requirements.md).
+-   Add draft of [SLSA Source Track].
+-   Add draft of [SLSA Build Environment Track].
 
 <!-- Footnotes and link definitions -->
 
 [in-toto attestation]: https://github.com/in-toto/attestation
 [v1.0]: /spec/v1.0/
+[SLSA Source Track]: ../../source/draft

@@ -1,6 +1,7 @@
 ---
 title: Verifying artifacts
 description: SLSA uses provenance to indicate whether an artifact is authentic or not, but provenance doesn't do anything unless somebody inspects it. SLSA calls that inspection verification, and this page describes how to verify artifacts and their SLSA provenenance. The intended audience is platform implementers, security engineers, and software consumers.
+layout: specifications
 ---
 
 SLSA uses provenance to indicate whether an artifact is authentic or not, but
@@ -29,7 +30,7 @@ Verification SHOULD include the following steps:
 ![Threats covered by each step](images/supply-chain-threats-build-verification.svg)
 
 See [Terminology](terminology.md) for an explanation of supply chain model and
-[Threats & mitigations](threats.md) for a detailed explanation of each threat.
+[Threats & mitigations] for a detailed explanation of each threat.
 
 **Note:** This section assumes that the provenance is in the recommended
 [provenance format](/provenance/v1). If it is not, then the verifier SHOULD
@@ -128,11 +129,11 @@ Resulting threat mitigation:
         unintended package, such as through typosquatting. Those threats are
         discussed in more detail under [Threat "H"].
 
-[Threat "E"]: threats#e-build-process
-[Threat "F"]: threats#f-artifact-publication
-[Threat "G"]: threats#g-distribution-channel
-[Threat "H"]: threats#h-package-selection
-[Threat "I"]: threats#i-usage
+[Threat "E"]: ../../spec/v1.0/threats#e-build-process
+[Threat "F"]: ../../spec/v1.0/threats#f-artifact-publication
+[Threat "G"]: ../../spec/v1.0/threats#g-distribution-channel
+[Threat "H"]: ../../spec/v1.0/threats#h-package-selection
+[Threat "I"]: ../../spec/v1.0/threats#i-usage
 
 [validation-model]: https://github.com/in-toto/attestation/blob/main/docs/validation.md#validation-model
 
@@ -173,7 +174,7 @@ source repository, then put only the source repository in
 `externalParameters`. Such a design is easier to verify because the source
 repository is constant across builds.
 
-[Threat "D"]: threats#d-external-build-parameters
+[Threat "D"]: ../../spec/v1.0/threats#d-external-build-parameters
 
 ### Step 3: (Optional) Check dependencies recursively
 
@@ -192,9 +193,9 @@ heuristic or exception mechanism is almost always necessary when verifying
 dependencies because there will be transitive dependencies that are SLSA Build
 L0. (For example, consider the compiler's compiler's compiler's ... compiler.)
 
-[dependency threats]: threats#dependency-threats
+[dependency threats]: ../../spec/v1.0/threats#dependency-threats
 [VSA]: /verification_summary
-[threats]: threats
+[threats]: ../../spec/1.0/threats
 
 ## Forming Expectations
 
@@ -301,3 +302,5 @@ Consumers can continuously poll a monitor to detect artifacts that
 do not meet the monitor's expectations. Detecting artifacts that fail
 verification is of limited benefit unless a human or automated system takes
 action in response to the failed verification.
+
+[Threats & mitigations]: ../../spec/v1.0/threats.md

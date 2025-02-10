@@ -4,6 +4,7 @@ description: |
   SLSA uses attestations to indicate security claims associated with a repository revision, but attestations don't do anything unless somebody inspects them.
   SLSA calls that inspection verification, and this page describes how to verify properties of source revisions using their SLSA source provenance attestations.
   The intended audience is platform implementers, security engineers, and software consumers.
+layout: specifications
 ---
 
 SLSA uses attestations to indicate security claims associated with a repository revision, but attestations don't do anything unless somebody inspects them.

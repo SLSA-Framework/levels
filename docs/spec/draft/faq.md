@@ -89,7 +89,7 @@ Jenkins plugin.
 
 Build platform and build system have been used interchangeably in the past. With
 the v1.0 specification, however, there has been a unification around the term
-platform as indicated in the [Terminology](terminology.md). The use of the word
+platform as indicated in the [Terminology]. The use of the word
 `system` still exists related to software and services within the build platform
 and to systems outside of a build platform like change management systems.
 
@@ -177,9 +177,10 @@ Some common situations may include:
 Additional requirements on the self-hosted runners may be added to Build levels
 greater than L3 when such levels get defined.
 
-[build level requirements]: requirements.md
+[build level requirements]: ../../build/v1.0/requirements.md
 [GitHub Actions]: https://docs.github.com/en/actions/hosting-your-own-runners
 [Software Bill of Materials (SBOM)]: https://ntia.gov/sbom
 [SLSA Provenance]: provenance.md
 [Build track]: levels.md#build-track
 [in-toto Attestation Framework]: https://github.com/in-toto/attestation/blob/main/spec/
+[Terminology]: ../../build/v1.0/terminology.md
