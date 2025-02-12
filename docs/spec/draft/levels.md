@@ -34,6 +34,7 @@ hermeticity or completeness of provenance -->
 > SLSA 1–4. For version 1.0 the Source aspects were removed to focus on the
 > Build track. A Source track may be added in [future versions].
 
+<section id="build-track">
 ## Build track
 
 The SLSA build track describes increasing levels of trustworthiness and
