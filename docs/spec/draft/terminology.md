@@ -247,10 +247,10 @@ additions are welcome!
     <td><a href="https://doc.rust-lang.org/cargo/appendix/glossary.html#crate">Crate name</a>
     <td><a href="https://doc.rust-lang.org/cargo/appendix/glossary.html#artifact">Artifact</a>
   <tr>
-    <td><a href="http://neilb.org/2015/09/05/cpan-glossary.html">CPAN</a> (Perl)
-    <td>Upload server
-    <td>Distribution
-    <td>Release (or Distribution)
+    <td><a href="https://www.cpan.org">CPAN</a> (Perl)
+    <td><a href="https://pause.perl.org/pause/query?ACTION=pause_04about">PAUSE</a>
+    <td><a href="https://neilb.org/2015/09/05/cpan-glossary.html#distribution">Distribution</a>
+    <td><a href="https://neilb.org/2015/09/05/cpan-glossary.html#release">Release</a> (or <a href="https://neilb.org/2015/09/05/cpan-glossary.html#distribution">Distribution</a>)
   <tr>
     <td><a href="https://go.dev/ref/mod">Go</a>
     <td><a href="https://go.dev/ref/mod#glos-module-proxy">Module proxy</a>
