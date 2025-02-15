@@ -1,6 +1,7 @@
 ---
 title: Build Environment track
 description: This page gives an overview of the SLSA Build Environment track and its levels, describing their security objectives and general requirements.
+mermaid: true
 ---
 
 ## Rationale
@@ -47,7 +48,64 @@ environment, and the compute platform they used.
 
 ### Build environment threats
 
-TODO
+SLSA [Build track] defines requirements for the provenance that is generated for the build artifacts. Trustworthiness of the build provenance largely depends on the trustworthiness of the [build environment] the build runs in. Build track assumes full trust into the [Build Platform] providing no solutions to verify integrity of the build environment. BuildEnv track intends to close this gap.
+
+Build environment is bootstrapped from a [build image], which is expected to be an artifact of a SLSA build pipeline. Build platform verifies image provenance upon starting up the environment and provides evidence to the tenant.
+
+Bootrapping the build environment is a complex process, especially at higher SLSA levels. [Build L3] usually requires significant changes to existing build platforms to maintain ephemeral build environments. It is not uncommon for the build platforms to rely on public cloud providers for managing compute resources that power build environments. This in turn might significantly increase attack surface because added build platform dependencies effectively become part of the [TCB].
+
+BuildEnv track addresses TCB size concerns at [BuildEnv L2] and [BuildEnv L3] levels. [BuildEnv L1] level assumes full trust into the Build Platform including underlying [Compute Platform] (eg. public cloud provider). BuildEnv L2 level adds capabilities for verifying Compute Platform. BuildEnv L3 level removes Compute Platform from TCB rooting the trust into the hardware.
+
+This diagram outlines the lifetime of a build image between it being generated and used for creating a build environment. Build Image could be compromised at different times (components). Higher SLSA levels secure the build environment from a larger amount of threats.
+
+<div class="mermaid">
+flowchart LR    
+      BuildImage>Build Image] ---> |L1|BuildPlatform[[Build Platform]]
+      BuildPlatform[[Build Platform]] ---> |L2|ComputeProvider[[Compute Provider]]
+      ComputeProvider[[Compute Provider]] ---> |L3|BuildEnvironment[(Build Environment)]
+</div>
+
+[BuildEnv L1] protects from threats that happened to the build image in between generating it and passing to the Build Platform. This covers cases of unauthorized modifications happening to the image as it is distributed (potentially via untrusted channels).
+
+[BuildEnv L2] level protects from threats occurring at the Build Platform side as it interacts with the Compute Platform for actually creating a build environment. [Control plane] is the only Build Platform component that is considered trusted at L2 as it performs remote attestation of the build environment.
+
+[BuildEnv L3] level protects from threats coming from the Compute Platform. It requires build running in a trusted execution environment using technologies like [AMD SEV] and [Intel TDX]. Compute platform is considered untrusted at L3 with the trust rooted into hardware.
+
+NOTE: [Control Plane] is considered trusted at L2 and L3 as it performs remote attestation of the build environment. Build platforms MAY provide capabilities that let tenants perform remote attestation themselves. However, for the Control Plane to be considered untrusted it should have no back-door access to the build environment (e.g. via SSH). Besides, Control Plane provides input data to the build environment (i.e. build request message) and security risks associated with compromising inputs have to be considered as well.
+
+What follows are the example threats.
+
+#### Invalid build image
+
+_Threat_: Wrong [build image] is used for the [build environment]. This could be a dev/test image or an older version of the image having security vulnerabilities.
+
+_Mitigation_: [Control Plane] verifies build image provenance upon creating build environment. Needs [BuildEnv L1] level
+
+_Example_: Malicious actor gained access to the build image supply chain and was ultimately able to configure the wrong image in the Build platform.
+
+#### Root file system integrity
+
+_Threat_: Malicious software is deployed to the [build environment] via unauthorized access to the root file system.
+
+_Mitigation_: Root file system is protected by file system integrity solutions like [dm-verity] and is measured in the [TPM]. Or the root file system is encrypted with the encryption key released to the build environment after it has passed remote attestation. Needs [BuildEnv L2] level.
+
+_Example_: Malicious actor gained unauthorized access to the build environment root file system and was able to modify it. For a build image that is served remotely via a network file system or a network block device this could happen if the remote server is compromised or data was compromised at rest.
+
+#### Reused build environment
+
+_Threat_: [Build environment] unexpectedly reused across two or more builds
+
+_Mitigation_: Unique build identifier is included into the Build environment provenance (and [TPM] measurement) allowing [Control plane] to detect environment reuse. Needs [BuildEnv L2] level
+
+_Example_: Due to a bug in the build platform, the environment was used for running two or more jobs and effectively losing “ephemeral” property. Malicious actors could use this vulnerability to poison the build environments they should not have access to.
+
+#### Continuous integrity of the build environment
+
+_Threat_: [Build environment] integrity was compromised due to unauthorized access on the [Compute platform] provider side.
+
+_Mitigation_: Trusted execution environment provided by hardware-assisted mechanisms like [AMD SEV] and [Intel TDX] secures access to the build environment state even in the event of a fully compromised compute provider. Requires [BuildEnv L3] level.
+
+_Example_: Malicious actor (potentially a rogue administrator) was able to retrieve encryption secrets from the build environment memory and modify contents of the root or temporary file system (used to store transient data including build artifacts).
 
 ## BuildEnv levels
 
@@ -285,6 +343,7 @@ TODO
 
 <!-- Link definitions -->
 
+[Build track]: levels.md#build-track
 [Build L1]: levels.md#build-l1
 [Build L2]: levels.md#build-l2
 [Build L3]: levels.md#build-l3
@@ -292,6 +351,8 @@ TODO
 [BuildEnv L1]: #buildenv-l1
 [BuildEnv L2]: #buildenv-l2
 [BuildEnv L3]: #buildenv-l3
+[control plane]:  terminology.md#control-plane
+[dm-verity]: https://docs.kernel.org/admin-guide/device-mapper/verity.html
 [Release Attestation]: https://github.com/in-toto/attestation/blob/main/spec/predicates/release.md
 [SCAI]: https://github.com/in-toto/attestation/blob/main/spec/predicates/scai.md
 [Secure Boot]: https://wiki.debian.org/SecureBoot#What_is_UEFI_Secure_Boot.3F
@@ -304,7 +365,9 @@ TODO
 [hosted]: requirements.md#isolation-strength
 [boot process]:  terminology.md#boot-process
 [build agent]: terminology.md#build-agent
+[build environment]: terminology.md#build-environment
 [build image producer]: terminology.md#build-image-producer
+[build platform]: terminology.md#platform
 [build platforms]: terminology.md#platform
 [compute platform]: terminology.md#compute-platform
 [host interface]: terminology.md#host-interface
@@ -314,3 +377,6 @@ TODO
 [reference values]: terminology.md#reference-value
 [several classes]: #build-environment-threats
 [vTPM]: https://trustedcomputinggroup.org/about/what-is-a-virtual-trusted-platform-module-vtpm/
+[AMD SEV]: https://www.amd.com/en/developer/sev.html
+[Intel TDX]: https://www.intel.com/content/www/us/en/developer/tools/trust-domain-extensions/overview.html
+[TCB]: https://csrc.nist.gov/glossary/term/trusted_computing_base

@@ -30,4 +30,7 @@
     {%- if page.noindex %}
     <meta name="robots" content="noindex">
     {% endif -%}
+    {%- if page.mermaid %}
+    {% include mermaid.html %}  
+    {% endif -%}
 </head>
