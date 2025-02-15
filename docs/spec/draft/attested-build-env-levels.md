@@ -1,6 +1,7 @@
 ---
 title: Build Environment track
 description: This page gives an overview of the SLSA Build Environment track and its levels, describing their security objectives and general requirements.
+mermaid: true
 ---
 
 ## Rationale
@@ -51,18 +52,18 @@ SLSA [Build track] defines requirements for the provenance that is generated for
 
 Build environment is bootstrapped from a [build image], which is expected to be an artifact of a SLSA build pipeline. Build platform verifies image provenance upon starting up the environment and provides evidence to the tenant.
 
-Bootrapping the build environment is a complex process, especially at higher SLSA levels. [Build L3] usually requires significant changes to existing build platforms to maintain ephemeral build environments. It is not uncommon for the build platforms to rely on public cloud providers for managing compute resources that power build environments. This in turn might significantly increase attack surface because added build platform dependencies effectively become part of the TCB.
+Bootrapping the build environment is a complex process, especially at higher SLSA levels. [Build L3] usually requires significant changes to existing build platforms to maintain ephemeral build environments. It is not uncommon for the build platforms to rely on public cloud providers for managing compute resources that power build environments. This in turn might significantly increase attack surface because added build platform dependencies effectively become part of the [TCB].
 
 BuildEnv track addresses TCB size concerns at [BuildEnv L2] and [BuildEnv L3] levels. [BuildEnv L1] level assumes full trust into the Build Platform including underlying [Compute Platform] (eg. public cloud provider). BuildEnv L2 level adds capabilities for verifying Compute Platform. BuildEnv L3 level removes Compute Platform from TCB rooting the trust into the hardware.
 
 This diagram outlines the lifetime of a build image between it being generated and used for creating a build environment. Build Image could be compromised at different times (components). Higher SLSA levels secure the build environment from a larger amount of threats.
 
-```mermaid
-flowchart LR
+<div class="mermaid">
+flowchart LR    
       BuildImage>Build Image] ---> |L1|BuildPlatform[[Build Platform]]
       BuildPlatform[[Build Platform]] ---> |L2|ComputeProvider[[Compute Provider]]
       ComputeProvider[[Compute Provider]] ---> |L3|BuildEnvironment[(Build Environment)]
-```
+</div>
 
 [BuildEnv L1] protects from threats that happened to the build image in between generating it and passing to the Build Platform. This covers cases of unauthorized modifications happening to the image as it is distributed (potentially via untrusted channels).
 
@@ -102,7 +103,7 @@ _Example_: Due to a bug in the build platform, the environment was used for runn
 
 _Threat_: [Build environment] integrity was compromised due to unauthorized access on the [Compute platform] provider side.
 
-_Mitigation_: Trusted execution environment provided by hardware-assisted mechanisms like [AMD SEV] and [Intel TDX] secures access to the build environment state even in the event of a fully compromised compute provider. Requires [BuidlEnv L3] level.
+_Mitigation_: Trusted execution environment provided by hardware-assisted mechanisms like [AMD SEV] and [Intel TDX] secures access to the build environment state even in the event of a fully compromised compute provider. Requires [BuildEnv L3] level.
 
 _Example_: Malicious actor (potentially a rogue administrator) was able to retrieve encryption secrets from the build environment memory and modify contents of the root or temporary file system (used to store transient data including build artifacts).
 
@@ -378,3 +379,4 @@ TODO
 [vTPM]: https://trustedcomputinggroup.org/about/what-is-a-virtual-trusted-platform-module-vtpm/
 [AMD SEV]: https://www.amd.com/en/developer/sev.html
 [Intel TDX]: https://www.intel.com/content/www/us/en/developer/tools/trust-domain-extensions/overview.html
+[TCB]: https://csrc.nist.gov/glossary/term/trusted_computing_base
